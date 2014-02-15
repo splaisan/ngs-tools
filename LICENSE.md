@@ -8,7 +8,7 @@ You are free to:
 Share — to copy, distribute and transmit the work Remix — to adapt the work
 
 Under the following conditions:
-Attribution — You must attribute the work referring to the original author and licensor ( [VIB](https://www.vib.be) )
+Attribution — You must attribute the work referring to the original author and licensor ( [VIB](http://www.vib.be) )
 (but not in any way that suggests that they endorse you or your use of the work) 
 
 Share Alike — If you alter, transform, or build upon this work, you may distribute the resulting work

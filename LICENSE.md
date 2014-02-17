@@ -1,4 +1,4 @@
-[<img src="http://www.vib.be/VIBMediaLibrary/Logos/Service_facilities/BITS_website.jpg" target="_blank">](https://www.bits.vib.be)
+<img src="http://www.vib.be/VIBMediaLibrary/Logos/Service_facilities/BITS_website.jpg" link="https://www.bits.vib.be" target="_blank">]
 
 [![BITS icon](http://www.vib.be/VIBMediaLibrary/Logos/Service_facilities/BITS_website.jpg)](https://www.bits.vib.be)
 

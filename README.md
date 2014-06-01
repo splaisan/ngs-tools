@@ -3,6 +3,8 @@ ngstools
 
 content will be added soon
 
+<h4>Please send comments and feedback to <a href="mailto:sbits@vib.be">bits@vib.be</a></h4>
+
 ------------
 
 ![Creative Commons License](http://i.creativecommons.org/l/by-sa/3.0/88x31.png?raw=true)

@@ -3,7 +3,7 @@ ngstools
 
 content will be added soon
 
-<h4>Please send comments and feedback to <a href="mailto:sbits@vib.be">bits@vib.be</a></h4>
+<h4>Please send comments and feedback to <a href="mailto:bits@vib.be">bits@vib.be</a></h4>
 
 ------------
 

@@ -92,23 +92,23 @@ The output of the run is stored in two files
 ```
 $> locus2genes.R -r 3:2000000:4000000
 
-ensembl_gene_id  hgnc_symbol  entrezgene  chromosome_name  start_position  end_position  strand
-ENSG00000225044  NA           NA          3                2004065         2029154       -1
-ENSG00000223040  RN7SKP144    NA          3                2130617         2130895       -1
-ENSG00000144619  CNTN4        152330      3                2140497         3099645       1
-ENSG00000227588  CNTN4-AS2    100873976   3                2152093         2185925       -1
-ENSG00000230398  NA           NA          3                2403942         2404422       1
-ENSG00000225310  DNAJC19P4    NA          3                3026915         3027259       -1
-ENSG00000237990  CNTN4-AS1    NA          3                3080717         3102829       -1
-ENSG00000091181  IL5RA        3568        3                3111233         3168297       -1
-ENSG00000253049  NA           NA          3                3144597         3144699       1
-ENSG00000072756  TRNT1        51095       3                3168600         3192563       1
-ENSG00000113851  CRBN         51185       3                3190676         3221394       -1
-ENSG00000271870  NA           NA          3                3194626         3195119       1
-ENSG00000223727  NA           NA          3                3292371         3668980       -1
-ENSG00000223036  NA           NA          3                3688140         3688262       1
-ENSG00000144455  SUMF1        285362      3                3742498         4508965       -1
-ENSG00000175928  LRRN1        57633       3                3841121         3889387       1
+ensembl_gene_id  external_gene_id  entrezgene  chromosome_name  start_position  end_position  strand
+ENSG00000225044  RP11-204C23.1     NA          3                2004065         2029154       -1
+ENSG00000223040  RN7SKP144         NA          3                2130617         2130895       -1
+ENSG00000144619  CNTN4             152330      3                2140497         3099645       1
+ENSG00000227588  CNTN4-AS2         100873976   3                2152093         2185925       -1
+ENSG00000230398  AC026882.1        NA          3                2403942         2404422       1
+ENSG00000225310  DNAJC19P4         NA          3                3026915         3027259       -1
+ENSG00000237990  CNTN4-AS1         NA          3                3080717         3102829       -1
+ENSG00000091181  IL5RA             3568        3                3111233         3168297       -1
+ENSG00000253049  SNORA43           NA          3                3144597         3144699       1
+ENSG00000072756  TRNT1             51095       3                3168600         3192563       1
+ENSG00000113851  CRBN              51185       3                3190676         3221394       -1
+ENSG00000271870  RP11-97C16.1      NA          3                3194626         3195119       1
+ENSG00000223727  AC026188.1        NA          3                3292371         3668980       -1
+ENSG00000223036  AC024158.1        NA          3                3688140         3688262       1
+ENSG00000144455  SUMF1             285362      3                3742498         4508965       -1
+ENSG00000175928  LRRN1             57633       3                3841121         3889387       1
 ```
 
 REM: As seen, **7** of the **16** genes in the locus have a NCBI **entrezID** and are potentially annotated with GO terms.
@@ -135,20 +135,20 @@ We search for genes on loci of chromosome 3 and chromosome 5.
 ```
 $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000
 
-ensembl_gene_id  hgnc_symbol  entrezgene  chromosome_name  start_position  end_position  strand
-ENSG00000223727  NA           NA          3                3292371         3668980       -1
-ENSG00000223036  NA           NA          3                3688140         3688262       1
-ENSG00000144455  SUMF1        285362      3                3742498         4508965       -1
-ENSG00000175928  LRRN1        57633       3                3841121         3889387       1
-ENSG00000263746  MIR4277      100422966   5                1708900         1708983       -1
-ENSG00000260066  NA           NA          5                1725264         1728287       1
-ENSG00000171421  MRPL36       64979       5                1798500         1801480       -1
-ENSG00000145494  NDUFS6       4726        5                1801514         1816719       1
-ENSG00000249966  NA           NA          5                1851064         1851611       1
-ENSG00000250417  NA           101929034   5                1856084         1856682       -1
-ENSG00000113430  IRX4         50805       5                1877541         1887350       -1
-ENSG00000249116  NA           NA          5                1884080         1884763       1
-ENSG00000249326  NA           101929081   5                1887446         1900607       1
+ensembl_gene_id  external_gene_id  entrezgene  chromosome_name  start_position  end_position  strand
+ENSG00000223727  AC026188.1        NA          3                3292371         3668980       -1
+ENSG00000223036  AC024158.1        NA          3                3688140         3688262       1
+ENSG00000144455  SUMF1             285362      3                3742498         4508965       -1
+ENSG00000175928  LRRN1             57633       3                3841121         3889387       1
+ENSG00000263746  MIR4277           100422966   5                1708900         1708983       -1
+ENSG00000260066  CTD-2587M23.1     NA          5                1725264         1728287       1
+ENSG00000171421  MRPL36            64979       5                1798500         1801480       -1
+ENSG00000145494  NDUFS6            4726        5                1801514         1816719       1
+ENSG00000249966  CTD-2194D22.1     NA          5                1851064         1851611       1
+ENSG00000250417  CTD-2194D22.2     101929034   5                1856084         1856682       -1
+ENSG00000113430  IRX4              50805       5                1877541         1887350       -1
+ENSG00000249116  CTD-2194D22.3     NA          5                1884080         1884763       1
+ENSG00000249326  CTD-2194D22.4     101929081   5                1887446         1900607       1
 ```
 
 ## The same query but looking also to the enrichment in GO:BP (default) against the whole genome

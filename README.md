@@ -3,8 +3,7 @@ ngstools
 
 # **locus2genes**
 
-A script using R packages to query biomaRt and fetch genes in a given locus (loci) before computing GO enrichment on the gene list.
-
+A script using R packages to query biomaRt and fetch genes in a given locus (loci) before computing GO enrichment on the gene list. Please read the [dedicated page](locus2genes/README.md) for more info.
 
 
 <h4>Please send comments and feedback to <a href="mailto:bits@vib.be">bits@vib.be</a></h4>

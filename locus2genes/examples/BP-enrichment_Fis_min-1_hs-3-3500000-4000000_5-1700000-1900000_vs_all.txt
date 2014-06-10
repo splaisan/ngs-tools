@@ -1,0 +1,88 @@
+#### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 17:14:43
+### GO-BP enrichment results for locus: 3:3500000:4000000,5:1700000:1900000 (8 entrezIDs)
+## against:'all' hs genes (25788 entrezIDs)
+## organism :  hsapiens_gene_ensembl 
+
+### GOdata summary:  
+
+------------------------- topGOdata object -------------------------
+
+ Description:
+   -  Fisher test 
+
+ Ontology:
+   -  BP 
+
+ 25788 available genes (all genes from the array):
+   - symbol:  115286 100873766 100506680 100506697 100873972  ...
+   - 8  significant genes. 
+
+ 14850 feasible genes (genes that can be used in the analysis):
+   - symbol:  115286 221178 685 2520 9001  ...
+   - 4  significant genes. 
+
+ GO graph (nodes with at least  1  genes):
+   - a graph with directed edges
+   - number of nodes = 12633 
+   - number of edges = 29073 
+
+------------------------- topGOdata object -------------------------
+
+
+## results for Fisher
+
+Description: Fisher test 
+Ontology: BP 
+'classic' algorithm with the 'fisher' test
+12633 GO terms scored: 4 terms with p < 0.01
+Annotation data:
+    Annotated genes: 14850 
+    Significant genes: 4 
+    Min. no. of genes annotated to a GO: 1 
+    Nontrivial nodes: 86 
+
+## results for KS
+
+Description: Fisher test 
+Ontology: BP 
+'classic' algorithm with the 'ks' test
+12633 GO terms scored: 201 terms with p < 0.01
+Annotation data:
+    Annotated genes: 14850 
+    Significant genes: 4 
+    Min. no. of genes annotated to a GO: 1 
+    Nontrivial nodes: 12633 
+
+
+### Enrichment results 
+
+
+### Fisher + KS test summary (orderBy = 'Fis', ranksOf 'KS') : 
+ 
+        GO.ID                                        Term Annotated Significant
+1  GO:0048561          establishment of organ orientation         2           1
+2  GO:0048560 establishment of anatomical structure or...         3           1
+3  GO:0070584                 mitochondrion morphogenesis        15           1
+4  GO:0010259              multicellular organismal aging        30           1
+5  GO:0006120 mitochondrial electron transport, NADH t...        39           1
+6  GO:0042773    ATP synthesis coupled electron transport        50           1
+7  GO:0042775 mitochondrial ATP synthesis coupled elec...        50           1
+8  GO:0006687         glycosphingolipid metabolic process        62           1
+9  GO:0006119                   oxidative phosphorylation        64           1
+10 GO:0072358           cardiovascular system development       826           2
+   Expected Rank in KS     Fis   KS
+1      0.00      11708 0.00054 0.96
+2      0.00      11949 0.00081 0.98
+3      0.00       4653 0.00403 0.37
+4      0.01      10177 0.00806 0.83
+5      0.01      12256 0.01046 0.99
+6      0.01      12466 0.01340 1.00
+7      0.01      12467 0.01340 1.00
+8      0.02       3770 0.01660 0.29
+9      0.02      11838 0.01713 0.97
+10     0.22       8991 0.01720 0.73
+
+
+---------
+## REFERENCE: 
+[1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "

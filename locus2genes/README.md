@@ -1,7 +1,7 @@
 **locus2genes.R**
 ===========
 
-A standalone R scripts to get all genes in a given genomic region using **biomaRt** and optionally compute GO enrichment based on this list and a reference-set (or the full genome)
+We introduce here a standalone R scripts to get all genes in a given genomic region using **biomaRt** and optionally compute GO enrichment based on this list and a reference-set (or the full genome)
 
 # Introduction
 
@@ -19,7 +19,7 @@ We are aware that much more can be done using the bioconductor package topGO tog
 
 In order to use the **locus2genes.R** scripts, you will need [R] and RScript installed on your computer (done by most package installers including yum and apt-get).
 
-You will also need the following [R] packages:
+You will also need the following [R] packages (as well as some dependencies):
 
 * **optparse** [http://cran.r-project.org/web/packages/optparse/](http://cran.r-project.org/web/packages/optparse/) to handle command line arguments.
 
@@ -46,6 +46,10 @@ biocLite("org.Hs.eg.db")
 
 # for enrichment analysis of mouse data
 biocLite("org.Mm.eg.db")
+
+# additional packages required to plot include "grid", "Rgraphviz"
+# REM: if the script does not execute, please report your error messages 
+#      so that we edit this part of this Readme to reflect your observations.
 ```
 
 # The locus2genes.R scripts manpage
@@ -166,7 +170,9 @@ $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000 -e yes
 
 One additional file is created that contains results of enrichment in 'BP' (for: biological process) for the gene-list. Other GO categories ('MF' and 'CC') can be enriched with the '-c' parameters, the enrichment can be tuned in different ways using additional parameters (run locus2genes.R -h for more details).
 
-The resulting file 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' contains information about the enrichment and the top 10 results (more can be obtained using the '-n' parameter).
+The resulting files include:
+
+* 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' summary report contains information about the enrichment and the top 10 results (the limit can be adapted with '-n').
 
 ```
 #### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 16:28:20
@@ -245,6 +251,28 @@ Annotation data:
 ## REFERENCE: 
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
+
+* The full table of GO results (open it in your favorite worksheet application) 
+
+```
+
+GO.ID	Term	Annotated	Significant	Expected	Fisher
+GO:0048561	establishment of organ orientation	2	1	0	0.00054
+GO:0048560	establishment of anatomical structure or...	3	1	0	0.00081
+GO:0070584	mitochondrion morphogenesis	15	1	0	0.00403
+GO:0010259	multicellular organismal aging	30	1	0,01	0.00806
+GO:0006120	mitochondrial electron transport, NADH t...	39	1	0,01	0.01046
+GO:0042773	ATP synthesis coupled electron transport	50	1	0,01	0.01340
+GO:0042775	mitochondrial ATP synthesis coupled elec...	50	1	0,01	0.01340
+GO:0006687	glycosphingolipid metabolic process	62	1	0,02	0.01660
+GO:0006119	oxidative phosphorylation	64	1	0,02	0.01713
+... cut at 10 lines
+
+```
+
+* A GO-graph reporting the significant GO-terms (up to 10) in a hierarchical graph.
+
+<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_allTop_GO-terms_classic_4_all.pdf" alt="GO graph" style="width: 600px;"/>
 
 ## An example with 'GO'-enrichment against a user-defined background (universe)
 
@@ -347,6 +375,8 @@ Annotation data:
 ## REFERENCE: 
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
+
+<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-dataTop_GO-terms_classic_3_all.pdf" alt="GO graph" style="width: 600px;"/>
 
 **Please read the information about the other available optional parameters to tune this utility to best fit your needs.*
 

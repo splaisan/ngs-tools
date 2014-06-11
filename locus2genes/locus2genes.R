@@ -275,6 +275,39 @@ if (opt$enrichment == "yes") {
   	cat ("\n\n---------\n## REFERENCE:", "\n")
   	print(citation$textVersion)
   	sink()
+  	
+  	# save full enrichment results to file
+  	# save full table
+	outfile4 <- paste(opt$ontology, "-enrichment_", "_min-", opt$minnodes, "_", 
+		opt$organism, "-", locus.str, "_vs_", bckgrn.lab, "full-results.txt", sep="")
+	
+	# get the size of the full table and use as limit
+  	go.count <- length(score(resultFisher))
+	fullRes <- GenTable(GOdata, 
+                   Fisher = resultFisher, 
+                   topNodes = go.count)
+  	
+  	write.table(fullRes, 
+			file = outfile4, 
+			row.names = FALSE, 
+			sep = "\t", 
+			quote = FALSE, 
+			dec = ",",
+			na = "NA",
+			col.names = TRUE)
+  	
+  	# Also print the GO graph for all significant terms (max 10) directly to PDF
+  	# if sig.res > 10, limit to 10
+  	sig.res=length(score(resultFisher)[score(resultFisher)<=0.01])
+	topN = ifelse(sig.res<11, sig.res, 10)
+	file.prefix <- paste(opt$ontology, "-enrichment_", "_min-", opt$minnodes, "_", 
+		opt$organism, "-", locus.str, "_vs_", bckgrn.lab, "Top_GO-terms", sep="")
+	printGraph(GOdata, 
+           resultFisher, 
+           firstSigNodes = topN, 
+           fn.prefix = file.prefix, 
+           useInfo = "all", 
+           pdfSW = TRUE)
 }
 
 cat("\n### Finished successfully!\n")

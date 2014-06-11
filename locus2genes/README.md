@@ -272,7 +272,7 @@ GO:0006119	oxidative phosphorylation	64	1	0,02	0.01713
 
 * A GO-graph reporting the significant GO-terms (up to 10) in a hierarchical graph.
 
-<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_allTop_GO-terms_classic_4_all.pdf" alt="GO graph" style="width: 600px;"/>
+<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_allTop_GO-terms_classic_4_all.png" alt="GO graph" style="width: 600px;"/>
 
 ## An example with 'GO'-enrichment against a user-defined background (universe)
 
@@ -376,7 +376,7 @@ Annotation data:
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
 
-<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-dataTop_GO-terms_classic_3_all.pdf" alt="GO graph" style="width: 600px;"/>
+<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-dataTop_GO-terms_classic_3_all.png" alt="GO graph" style="width: 600px;"/>
 
 **Please read the information about the other available optional parameters to tune this utility to best fit your needs.*
 

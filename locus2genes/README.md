@@ -59,6 +59,7 @@ Type **locus2genes.R -h** will list all available parameters
 ```
 Usage: locus2genes.R [options]
 
+
 Options:
 	-r REGION, --region=REGION
 		genomic region(s)
@@ -82,7 +83,6 @@ Options:
 
 	-f BACKGROUNDFILE, --backgroundfile=BACKGROUNDFILE
 		file with background 'entrezID' list for stats (one ID per line)
-
 
 	-t TOPRESULTS, --topresults=TOPRESULTS
 		return N top results from stat test [default: 10]

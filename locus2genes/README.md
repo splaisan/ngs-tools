@@ -254,7 +254,7 @@ In our next example, we generate the full list of genes on chromosomes 3 and 5 a
 
 ### Preparing the background set from two full chromosomes
 
-When providing more than one locus, provide them with the '-r' as a comma-separated list of chr\:start\:end without spaces (see example below). If you use 'chr' to name your chromosomes, it will be removed to comply with the ensembl nomenclature. Note that you can provide loci with strand as fourth parameter if you have obtained strand-specific results (eg: chr\:start\:end\:1 for the upper strand ('-1' for the '-' strand).
+When providing more than one locus, provide them with the '-r' as a comma-separated list of chr\:start\:end without spaces (see example below). If you use 'chr' to name your chromosomes, it will be removed to comply with the ensembl nomenclature. Note that you can provide loci with strand as fourth parameter if you have obtained strand-specific results (eg: chr\:start\:end\:1 forr the upper strand ('-1' for the '-' strand).
 
 ```
 $>locus2genes.R -r 3:1:198022430,5:1:180915260

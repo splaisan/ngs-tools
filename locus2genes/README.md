@@ -30,7 +30,14 @@ You will also need the following [R] packages:
 You can install all the required packages with the following code in [R] or RStudio. The installation of the genome packages will take some time as these databases are quite large.
 
 ```
+## while in R or RStudio with admin rights:
+# connect to the BiocInstaller repo
 source("http://bioconductor.org/biocLite.R")
+
+# first install the basic bioconductor package set (can take some time!)
+biocLite()
+
+# then install required packages
 biocLite("biomaRt")
 biocLite("topGO")
 
@@ -72,8 +79,6 @@ Options:
 	-f BACKGROUNDFILE, --backgroundfile=BACKGROUNDFILE
 		file with background 'entrezID' list for stats (one ID per line)
 
-	-s STATRANK, --statrank=STATRANK
-		rank by 'Fisher' or by 'Kolmogorov-Smirnov' test ('Fis', 'KS') [default: Fis]
 
 	-t TOPRESULTS, --topresults=TOPRESULTS
 		return N top results from stat test [default: 10]
@@ -125,7 +130,7 @@ REM: As seen, **7** of the **16** genes in the locus have a NCBI **entrezID** an
 57633
 ```
 
-This file/list can be used to upload to your favorite annotation software (DAVID, IPA, GeneGO) or use as background reference for a new locus2genes query with enrichment (see below)
+**NOTE:** This file/list can be used to upload to your favorite annotation software (DAVID, IPA, GeneGO) or use as background reference for a new locus2genes query with enrichment (BioMart enrichment GUI, or see below)
 
 
 ## An example with more than one locus provided as a comma delimited list
@@ -151,7 +156,7 @@ ENSG00000249116  CTD-2194D22.3     NA          5                1884080         
 ENSG00000249326  CTD-2194D22.4     101929081   5                1887446         1900607       1
 ```
 
-## The same query but looking also to the enrichment in GO:BP (default) against the whole genome
+## The same query but looking also to the enrichment in GO:BP (default choice) against the whole genome
 
 We use here all default settings and only ask to compute enrichment after retrieving the gene list ('-e yes').
 
@@ -159,9 +164,9 @@ We use here all default settings and only ask to compute enrichment after retrie
 $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000 -e yes
 ```
 
-One additional file is created that contains results of enrichment in 'BP' (for: biological process) for the gene-list. Other GO categories ('MF' and 'CC') can be requested with the '-c' parameters, the enrichment can be tuned in different ways using additional parameters (run locus2genes.R -h for more details).
+One additional file is created that contains results of enrichment in 'BP' (for: biological process) for the gene-list. Other GO categories ('MF' and 'CC') can be enriched with the '-c' parameters, the enrichment can be tuned in different ways using additional parameters (run locus2genes.R -h for more details).
 
-The resulting file 'BP-enrichment_Fis_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' contains information about the enrichment and teh top 10 results (more can be obtained using the '-n' parameter.
+The resulting file 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' contains information about the enrichment and the top 10 results (more can be obtained using the '-n' parameter.
 
 ```
 #### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 16:28:20
@@ -174,7 +179,7 @@ The resulting file 'BP-enrichment_Fis_min-1_hs-3-3500000-4000000_5-1700000-19000
 ------------------------- topGOdata object -------------------------
 
  Description:
-   -  Fisher test 
+   -  Fisher enrichment test 
 
  Ontology:
    -  BP 
@@ -197,7 +202,7 @@ The resulting file 'BP-enrichment_Fis_min-1_hs-3-3500000-4000000_5-1700000-19000
 
 ## results for Fisher
 
-Description: Fisher test 
+Description: Fisher enrichment test 
 Ontology: BP 
 'classic' algorithm with the 'fisher' test
 12633 GO terms scored: 4 terms with p < 0.01
@@ -207,23 +212,11 @@ Annotation data:
     Min. no. of genes annotated to a GO: 1 
     Nontrivial nodes: 86 
 
-## results for KS
-
-Description: Fisher test 
-Ontology: BP 
-'classic' algorithm with the 'ks' test
-12633 GO terms scored: 201 terms with p < 0.01
-Annotation data:
-    Annotated genes: 14850 
-    Significant genes: 4 
-    Min. no. of genes annotated to a GO: 1 
-    Nontrivial nodes: 12633 
-
 
 ### Enrichment results 
 
 
-### Fisher + KS test summary (orderBy = 'Fis', ranksOf 'KS') : 
+### Fisher test summary : 
  
         GO.ID                                        Term Annotated Significant
 1  GO:0048561          establishment of organ orientation         2           1
@@ -236,17 +229,17 @@ Annotation data:
 8  GO:0006687         glycosphingolipid metabolic process        62           1
 9  GO:0006119                   oxidative phosphorylation        64           1
 10 GO:0072358           cardiovascular system development       826           2
-   Expected Rank in KS     Fis   KS
-1      0.00      11708 0.00054 0.96
-2      0.00      11949 0.00081 0.98
-3      0.00       4653 0.00403 0.37
-4      0.01      10177 0.00806 0.83
-5      0.01      12256 0.01046 0.99
-6      0.01      12466 0.01340 1.00
-7      0.01      12467 0.01340 1.00
-8      0.02       3770 0.01660 0.29
-9      0.02      11838 0.01713 0.97
-10     0.22       8991 0.01720 0.73
+   Expected     Fis
+1      0.00 0.00054
+2      0.00 0.00081
+3      0.00 0.00403
+4      0.01 0.00806
+5      0.01 0.01046
+6      0.01 0.01340
+7      0.01 0.01340
+8      0.02 0.01660
+9      0.02 0.01713
+10     0.22 0.01720
 
 
 ---------
@@ -254,11 +247,11 @@ Annotation data:
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
 
-## An example with 'GO'-enrichment against a user defined background
+## An example with 'GO'-enrichment against a user-defined background (universe)
 
-Computing enrichment against the full genome (default) can lead to underestimating interesting categories. Users may prefer to enrich a locus as compared to a larger region encompassing it (the full chromosome!). This can be achieved by providing a custom background list of entrezIDs. This list can be built externally or obtained from an independent **locus2genes.R** query.
+Computing enrichment against the full genome (default) can lead to underestimating interesting categories. Users may prefer to enrich a locus as compared to a larger region encompassing it (eg: the full chromosome!). This can be achieved by providing a custom background list of entrezIDs. This list can be built externally or obtained from an independent **locus2genes.R** run.
 
-In our next example, we generate the full list of genes on chromosomes 3 and 5 as background set and use this list to look for enrichment in the 2 loci from the former example (the length of chr3 and chr5 can be obtained from the web or estimated).
+In our next example, we generate the full list of genes on chromosomes 3 and 5 as background set and use this list to look for enrichment in the 2 loci from the former example (rem: the length of chr3 and chr5 can be obtained from the web or estimated).
 
 ### Preparing the background set from two full chromosomes
 
@@ -266,14 +259,15 @@ In our next example, we generate the full list of genes on chromosomes 3 and 5 a
 $>locus2genes.R -r 3:1:198022430,5:1:180915260
 ```
 
-The second file generated during this run is named 'entrezIDs_3-1-198022430_5-1-180915260_hs.txt' and contains **2593** entrezIDs.
+The second file generated during this run reports all genes on chr3 and chr5, it is named 'entrezIDs_3-1-198022430_5-1-180915260_hs.txt' and contains **2593** entrezIDs.
 
-### Using the background set for enrichment
+### Using the custom background set for GO enrichment
 
 ```
 $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000 -e yes -b yes -f entrezIDs_3-1-198022430_5-1-180915260_hs.txt
 ```
-The results of the enrichment are slightly different from above as expected from a more focussed background set.
+
+The results of the enrichment are slightly different from above, as expected with a more focussed background set. Thi sis obviously a toy example and you will need to build your own local background based on a relevant biological hypotheses.
 
 ```
 #### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 16:47:59
@@ -286,7 +280,7 @@ The results of the enrichment are slightly different from above as expected from
 ------------------------- topGOdata object -------------------------
 
  Description:
-   -  Fisher test 
+   -  Fisher enrichment test 
 
  Ontology:
    -  BP 
@@ -309,7 +303,7 @@ The results of the enrichment are slightly different from above as expected from
 
 ## results for Fisher
 
-Description: Fisher test 
+Description: Fisher enrichment test 
 Ontology: BP 
 'classic' algorithm with the 'fisher' test
 7026 GO terms scored: 3 terms with p < 0.01
@@ -318,24 +312,12 @@ Annotation data:
     Significant genes: 4 
     Min. no. of genes annotated to a GO: 1 
     Nontrivial nodes: 86 
-
-## results for KS
-
-Description: Fisher test 
-Ontology: BP 
-'classic' algorithm with the 'ks' test
-7026 GO terms scored: 26 terms with p < 0.01
-Annotation data:
-    Annotated genes: 1516 
-    Significant genes: 4 
-    Min. no. of genes annotated to a GO: 1 
-    Nontrivial nodes: 7026 
-
+    
 
 ### Enrichment results 
 
 
-### Fisher + KS test summary (orderBy = 'Fis', ranksOf 'KS') : 
+### Fisher test summary : 
  
         GO.ID                                        Term Annotated Significant
 1  GO:0048560 establishment of anatomical structure or...         2           1
@@ -348,17 +330,17 @@ Annotation data:
 8  GO:0042775 mitochondrial ATP synthesis coupled elec...         6           1
 9  GO:0044255            cellular lipid metabolic process        86           2
 10 GO:0022900                    electron transport chain         9           1
-   Expected Rank in KS    Fis   KS
-1      0.01       7025 0.0053 1.00
-2      0.01       7026 0.0053 1.00
-3      0.01       7024 0.0053 1.00
-4      0.01       7023 0.0131 1.00
-5      0.02       6411 0.0158 0.97
-6      0.02       3055 0.0158 0.48
-7      0.02       6412 0.0158 0.97
-8      0.02       6413 0.0158 0.97
-9      0.23       2126 0.0177 0.34
-10     0.02       5975 0.0236 0.90
+   Expected    Fis
+1      0.01 0.0053
+2      0.01 0.0053
+3      0.01 0.0053
+4      0.01 0.0131
+5      0.02 0.0158
+6      0.02 0.0158
+7      0.02 0.0158
+8      0.02 0.0158
+9      0.23 0.0177
+10     0.02 0.0236
 
 
 ---------
@@ -371,7 +353,7 @@ Annotation data:
 
 # REFERENCES
 
-When using this code, please cite us but also the makers of the different embedded packages.
+When using this code, please cite the makers of the different embedded packages.
 
 ------------
 enjoy!

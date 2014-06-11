@@ -38,8 +38,6 @@ option_list <- list(
             help="user provides a list of 'entrezID's as background, (yes/no) [default: %default]"),
   make_option(c("-f", "--backgroundfile"), type="character", default='',
             help="file with background 'entrezID' list for stats (one ID per line)"),
-  make_option(c("-s", "--statrank"), type="character", default='Fis',
-            help="rank by 'Fisher' or by 'Kolmogorov-Smirnov' test ('Fis', 'KS') [default: %default]"),
   make_option(c("-t", "--topresults"), type="integer", default=10, 
             help="return N top results from stat test [default: %default]")
   )
@@ -61,11 +59,6 @@ if ( ! (opt$organism %in% c("hs", "mm") ) ) {
 # test ontology choice
 if ( ! (opt$ontology %in% c("MF", "BP", "CC") ) ) {
 	stop("Invalid <value> for '-g' , use 'MF', 'BP', or 'CC'!")
-	}
-
-# test stat test choice
-if ( ! (opt$statrank %in% c("Fis", "KS") ) ) {
-	stop("Invalid <value> for '-s' , use 'Fis', or 'KS'!")
 	}
 
 ########################################
@@ -232,43 +225,27 @@ if (opt$enrichment == "yes") {
 				  ontology = opt$ontology, 
 				  allGenes = test.list, 
 				  geneSel = function(p) p < 0.01,
-				  description = "Fisher test",
+				  description = "Fisher enrichment test",
 				  nodeSize = opt$minnodes,
 				  annot = annFUN.org, 
 				  mapping = go.ref, 
 				  ID = "entrez")
 
+	# compute enrichment with Fisher test
 	cat("\n### Computing Fisher test", "\n")
 	resultFisher <- runTest(GOdata, 
 							algorithm = "classic", 
 							statistic = "fisher")
-	# also apply KS
-	resultKS <- runTest(GOdata, 
-							algorithm = "classic", 
-							statistic = "ks")
-
-	# rank results by Fisher test Kolmogorov-Smirnov
-	if (opt$statrank == "Fis") { 
-		res.table <- GenTable(GOdata, 
+							
+	# store top results in table
+	res.table <- GenTable(GOdata, 
 								Fis = resultFisher, 
-								KS = resultKS,
-								ranksOf = "KS", 
 								orderBy = "Fis", 
 								topNodes = opt$topresults)
-		res.title <- "\n### Fisher + KS test summary (orderBy = 'Fis', ranksOf 'KS') :"
-	} else {
-		res.table <- GenTable(GOdata, 
-								Fis = resultFisher, 
-								KS = resultKS,
-								ranksOf = "Fis", 
-								orderBy = "KS", 
-								topNodes = opt$topresults)
-		res.title <- "\n### Fisher + KS test summary (orderBy = 'KS', ranksOf 'Fis') :"
-	}
+	res.title <- "\n### Fisher test summary :"
 	
 	# save full table
-	outfile3 <- paste(opt$ontology, "-enrichment_", 
-		opt$statrank, "_min-", opt$minnodes, "_", 
+	outfile3 <- paste(opt$ontology, "-enrichment_", "_min-", opt$minnodes, "_", 
 		opt$organism, "-", locus.str, "_vs_", bckgrn.lab, ".txt", sep="")
 	cat("\n### Saving enrichment results for region(s) to: ", outfile3, "\n")
 	
@@ -290,9 +267,6 @@ if (opt$enrichment == "yes") {
 
   	cat("\n## results for Fisher\n")
   	print(resultFisher)
-
-  	cat("\n## results for KS\n")
-  	print(resultKS)
   	
     cat("\n\n### Enrichment results", "\n\n")
   	cat(res.title, "\n")

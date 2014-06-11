@@ -215,7 +215,6 @@ Annotation data:
 
 ### Enrichment results 
 
-
 ### Fisher test summary : 
  
         GO.ID                                        Term Annotated Significant
@@ -315,7 +314,6 @@ Annotation data:
     
 
 ### Enrichment results 
-
 
 ### Fisher test summary : 
  

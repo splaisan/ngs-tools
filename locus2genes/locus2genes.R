@@ -268,7 +268,7 @@ if (opt$enrichment == "yes") {
   	cat("\n## results for Fisher\n")
   	print(resultFisher)
   	
-    cat("\n\n### Enrichment results", "\n\n")
+    cat("\n\n### Enrichment results", "\n")
   	cat(res.title, "\n")
   	cat(" \n")
   	print(res.table)

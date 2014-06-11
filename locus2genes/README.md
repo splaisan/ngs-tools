@@ -166,7 +166,7 @@ $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000 -e yes
 
 One additional file is created that contains results of enrichment in 'BP' (for: biological process) for the gene-list. Other GO categories ('MF' and 'CC') can be enriched with the '-c' parameters, the enrichment can be tuned in different ways using additional parameters (run locus2genes.R -h for more details).
 
-The resulting file 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' contains information about the enrichment and the top 10 results (more can be obtained using the '-n' parameter.
+The resulting file 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' contains information about the enrichment and the top 10 results (more can be obtained using the '-n' parameter).
 
 ```
 #### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 16:28:20

@@ -9,7 +9,7 @@ Users may identify a locus linked to a trait of interest and need to identify al
 
 The next step after identify the gene-list could be to ask wether this region presents enrichment in some gene ontology terms. It is indeed common that genes located in a genomic region are co-regulated by environmental conditions due to shared enhancers. Such genes may participate to a common biological process or belong to a common Molecular function in which case these annotations should be apparent when performing enrichment analysis of the gene list using GO.
 
-This can again also be done using Biomart and their recent [Biomart GUI enrichment tool (http://central.biomart.org/enrichment/#/gui/Enrichment)](http://central.biomart.org/enrichment/#/gui/Enrichment). The WEB tool takes accession lists including entrezID lists or lists of ensemble genes, has less options than our version, but also reports genes that led to GO enriched terms (not implemented in our tool).
+This can again also be done using Biomart and their recent [Biomart GUI enrichment tool (http://central.biomart.org/enrichment/#/gui/Enrichment)](http://central.biomart.org/enrichment/#/gui/Enrichment). The WEB tool takes accession lists including entrezID lists or lists of ensemble genes, has less options than our version, but also generates a live-graph (this is not done by our tool that by contrast reports several files including plots).
 
 We provide this facility in the **locus2genes.R** R-script as detailed below. Our script works for human and mouse but can easily be adapted for more organisms for which ensemble and GO data exist.
 
@@ -40,6 +40,7 @@ biocLite()
 # then install required packages
 biocLite("biomaRt")
 biocLite("topGO")
+biocLite("plotrix")   # required for the GO enrichment plot
 
 # for enrichment analysis of human data
 biocLite("org.Hs.eg.db")

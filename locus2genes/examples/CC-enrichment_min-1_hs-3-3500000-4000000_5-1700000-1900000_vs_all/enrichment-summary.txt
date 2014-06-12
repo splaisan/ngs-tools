@@ -1,0 +1,75 @@
+#### locus2genes (©SP:BITS2014, v1.0), 2014-06-122014-06-12 19:53:49
+### GO-CC enrichment results for locus: 3:3500000:4000000,5:1700000:1900000 (8 entrezIDs)
+## against:'all' hs genes (25788 entrezIDs)
+## organism :  hsapiens_gene_ensembl 
+
+### GOdata summary:  
+
+------------------------- topGOdata object -------------------------
+
+ Description:
+   -  Fisher enrichment test 
+
+ Ontology:
+   -  CC 
+
+ 25788 available genes (all genes from the array):
+   - symbol:  115286 100873766 100506680 100506697 100873972  ...
+   - 8  significant genes. 
+
+ 16880 feasible genes (genes that can be used in the analysis):
+   - symbol:  115286 221178 685 2520 9001  ...
+   - 5  significant genes. 
+
+ GO graph (nodes with at least  1  genes):
+   - a graph with directed edges
+   - number of nodes = 1434 
+   - number of edges = 2786 
+
+------------------------- topGOdata object -------------------------
+
+
+## results for Fisher
+
+Description: Fisher enrichment test 
+Ontology: CC 
+'classic' algorithm with the 'fisher' test
+1434 GO terms scored: 2 terms with p < 0.01
+Annotation data:
+    Annotated genes: 16880 
+    Significant genes: 5 
+    Min. no. of genes annotated to a GO: 1 
+    Nontrivial nodes: 55 
+
+
+### Enrichment results 
+
+### Fisher test summary : 
+ 
+        GO.ID                                        Term Annotated Significant
+1  GO:0000315          organellar large ribosomal subunit        15           1
+2  GO:0005762       mitochondrial large ribosomal subunit        15           1
+3  GO:0005747 mitochondrial respiratory chain complex ...        39           1
+4  GO:0030964                  NADH dehydrogenase complex        39           1
+5  GO:0045271                 respiratory chain complex I        39           1
+6  GO:0000313                         organellar ribosome        53           1
+7  GO:0005761                      mitochondrial ribosome        53           1
+8  GO:0005746             mitochondrial respiratory chain        62           1
+9  GO:0044429                          mitochondrial part       788           2
+10 GO:0070469                           respiratory chain        69           1
+   Expected Fisher
+1      0.00 0.0044
+2      0.00 0.0044
+3      0.01 0.0115
+4      0.01 0.0115
+5      0.01 0.0115
+6      0.02 0.0156
+7      0.02 0.0156
+8      0.02 0.0182
+9      0.23 0.0198
+10     0.02 0.0203
+
+
+---------
+## REFERENCE: 
+[1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "

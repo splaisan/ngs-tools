@@ -71,7 +71,7 @@ if("biomaRt" %in% rownames(installed.packages()) == FALSE) {
 suppressPackageStartupMessages(library("biomaRt"))
 
 # use the 'ensembl' mart
-ensembl = useMart("ensembl")
+ensembl <- useMart("ensembl")
 
 # connect database
 if (opt$organism == "mm") {
@@ -86,7 +86,7 @@ cat("\n### Connecting to BiomaRt\n")
 ensembl = useDataset(refgenome, mart=ensembl)
 
 # set filtering to region
-sel.filters = "chromosomal_region"
+sel.filters <- "chromosomal_region"
 
 # get region(s) from argument(s)
 chrom.region <- unlist(strsplit(opt$region, split=","))
@@ -96,7 +96,7 @@ chrom.region <- gsub("^chr", "", chrom.region, ignore.case = TRUE, perl = TRUE,
      fixed = FALSE, useBytes = FALSE)
 
 # set attributes
-sel.attributes = c("ensembl_gene_id",
+sel.attributes <- c("ensembl_gene_id",
 				 "external_gene_id",
 				 "entrezgene",
 				 "chromosome_name",
@@ -164,6 +164,13 @@ if (opt$enrichment == "yes") {
 	cat("\n### Loading the topGO library\n")
 	suppressPackageStartupMessages(library("topGO"))
 
+	# required to plot GO enrichment graph
+	if ("plotrix" %in% rownames(installed.packages()) == FALSE) {
+		stop("plotrix does not seem to be installed!")
+		}
+	cat("\n### Loading the plotrix library\n")
+	suppressPackageStartupMessages(library("plotrix"))
+
 	# choose reference organism for GO enrichment
 	if (opt$organism == "hs") {
 		# we work with human data
@@ -191,22 +198,34 @@ if (opt$enrichment == "yes") {
 
 		# load background data
 		user.ref <- read.table(opt$backgroundfile, quote="\"")
-		backgrnd.len = nrow(user.ref)
-		backgrnd.name = paste("'", opt$backgroundfile, "'", sep="")
+		backgrnd.len <- nrow(user.ref)
+		backgrnd.name <- paste("'", opt$backgroundfile, "'", sep="")
 		cat(paste("The chosen background list contains ", backgrnd.len, " entrezIDs.\n"))
-		bckgrn.lab = "user-data"
-		universe = user.ref$V1
+		bckgrn.lab <- "user-data"
+		universe <- user.ref$V1
 	} else {
 		# get all geneIDs for stats below, store in factor
 		cat("\n### Fetching full-genome list of genes for background set", "\n")
 		all.entrezgene <- getBM(attributes = "entrezgene",
 						values = "*", 
 						mart = ensembl)$entrezgene
-		backgrnd.len = length(all.entrezgene)
-		backgrnd.name = paste("'all'", opt$organism, "genes", sep=" ")
-		bckgrn.lab = "all"
-		universe = all.entrezgene
+		backgrnd.len <- length(all.entrezgene)
+		backgrnd.name <- paste("'all'", opt$organism, "genes", sep=" ")
+		bckgrn.lab <- "all"
+		universe <- all.entrezgene
 	}
+
+	# create folder to store all results
+	resfolder <- paste(opt$ontology, "-enrichment", 
+					"_min-", opt$minnodes, "_", 
+					opt$organism, "-", 
+					locus.str, "_vs_", bckgrn.lab,
+					sep="")
+
+	if (! file.exists(resfolder)) {
+	  dir.create(resfolder, showWarnings = FALSE, recursive = FALSE, mode = "0777")
+	  Sys.chmod(resfolder, mode = "0777", use_umask=TRUE)
+	  }
 
 	# create a named list with the universe AND
 	# flag the subset comming from the locus selection with '1'
@@ -239,14 +258,13 @@ if (opt$enrichment == "yes") {
 							
 	# store top results in table
 	res.table <- GenTable(GOdata, 
-								Fis = resultFisher, 
-								orderBy = "Fis", 
+								Fisher = resultFisher, 
+								orderBy = "Fisher", 
 								topNodes = opt$topresults)
 	res.title <- "\n### Fisher test summary :"
 	
 	# save full table
-	outfile3 <- paste(opt$ontology, "-enrichment_", "_min-", opt$minnodes, "_", 
-		opt$organism, "-", locus.str, "_vs_", bckgrn.lab, ".txt", sep="")
+	outfile3 <- paste(resfolder, "enrichment-summary.txt", sep="/")
 	cat("\n### Saving enrichment results for region(s) to: ", outfile3, "\n")
 	
 	# prepare citation
@@ -278,13 +296,14 @@ if (opt$enrichment == "yes") {
   	
   	# save full enrichment results to file
   	# save full table
-	outfile4 <- paste(opt$ontology, "-enrichment_", "_min-", opt$minnodes, "_", 
-		opt$organism, "-", locus.str, "_vs_", bckgrn.lab, "full-results.txt", sep="")
+  	outfile4 <- paste(resfolder, "full-results.txt", sep="/")
+	cat("\n### Saving full enrichment results for region(s) to: ", outfile4, "\n")
 	
 	# get the size of the full table and use as limit
   	go.count <- length(score(resultFisher))
 	fullRes <- GenTable(GOdata, 
-                   Fisher = resultFisher, 
+                   Fisher = resultFisher,
+                   orderBy = "Fisher", 
                    topNodes = go.count)
   	
   	write.table(fullRes, 
@@ -296,16 +315,93 @@ if (opt$enrichment == "yes") {
 			na = "NA",
 			col.names = TRUE)
   	
+  	## Save the table of significant GO-terms and genes justifying them 
+  	# significant terms
+	sigRes <- subset(fullRes, fullRes$Fisher<=0.01)
+	
+	# convert Fisher to numeric
+	sigRes$Fisher <- as.numeric(sigRes$Fisher)
+	
+	# get GO term list from sigRes
+	sel.terms <- sigRes$GO.ID
+
+	# get significant GO terms together with their genes (in the universe)
+	ann.score <- scoresInTerm(GOdata, sel.terms, use.names = TRUE)
+	
+	# define function to retrieve genes
+	getlist <- function(x, v) paste(
+				names(ann.score[[x[1]]][ann.score[[x[1]]] == v]), 
+				collapse=","
+				)
+				
+	# add to significant subset data.frame
+	GO2genes <- sigRes
+	GO2genes$present <- apply(GO2genes, 1, getlist, v=2)
+	GO2genes$absent <- apply(GO2genes, 1, getlist, v=1)
+	GO2genes$ratio <- signif(GO2genes$Significant/GO2genes$Annotated*100, 3)
+
+	# save full GO to genes table
+  	outfile5 <- paste(resfolder, "genes_in_sigGO.txt", sep="/")
+	cat("\n### Saving GO to genes table to: ", outfile5, "\n")
+
+  	write.table(GO2genes, 
+			file = outfile5, 
+			row.names = FALSE, 
+			sep = "\t", 
+			quote = FALSE, 
+			dec = ",",
+			na = "NA",
+			col.names = TRUE)
+	
+	# print significant GO p.value and ratio as graph like in IPA
+	outfile6 <- paste(resfolder, "/", opt$ontology, "-GOstats.pdf", sep="")
+	cat("\n### Saving GO stats plot to : ", outfile6, "\n")
+
+	# rounded limits
+	fis.max <- ceiling(max(-log10(GO2genes$Fisher)))
+	fis.ticks <- seq(0, fis.max, by=0.5)
+	rat.max <- ceiling(max(GO2genes$ratio))
+	rat.ticks <- seq(0, rat.max+5, by=5)
+
+	title <- paste("Significantly enriched terms for GO:",
+		opt$ontology, sep="")
+
+	pdf(file=outfile6, width=6, height=5, bg="white")
+
+	twoord.plot(lx = 1:nrow(GO2genes),
+				ly = -log10(GO2genes$Fisher),
+				rx = 1:nrow(GO2genes),
+				ry = GO2genes$ratio,
+				type = c("bar", "o"),
+				xticklab = "",
+				lylim = c(0, fis.max),
+				lytickpos = fis.ticks,
+				lcol = "cyan3",
+				rylim = c(0, rat.max)+c(0, 2),
+				rytickpos = rat.ticks,
+				rpch = 20,
+				rcol = "blue",
+				halfwidth = 0.3,
+				ylab = "-log(p.values) [Fisher test]",
+				rylab = "ratio (locus genes / GO:term genes)",
+				main =  title)
+	# add p.value confidence limit
+	abline(h=-log10(0.01), col='#FF000066', lwd=2)
+	staxlab(1,1:nrow(GO2genes), GO2genes$GO.ID,srt=45)
+	
+	dev.off()
+	
   	# Also print the GO graph for all significant terms (max 10) directly to PDF
   	# if sig.res > 10, limit to 10
-  	sig.res=length(score(resultFisher)[score(resultFisher)<=0.01])
-	topN = ifelse(sig.res<11, sig.res, 10)
-	file.prefix <- paste(opt$ontology, "-enrichment_", "_min-", opt$minnodes, "_", 
-		opt$organism, "-", locus.str, "_vs_", bckgrn.lab, "Top_GO-terms", sep="")
+  	sig.res <- length(score(resultFisher)[score(resultFisher)<=0.01])
+	topN <- ifelse(sig.res<11, sig.res, 10)
+	outfile7 <- paste(resfolder, "Graph_topGO-terms", sep="/")
+
+	cat("\n### Saving GO-praph under : ", outfile7, "\n")
 	printGraph(GOdata, 
            resultFisher, 
            firstSigNodes = topN, 
-           fn.prefix = file.prefix, 
+           fn.prefix = outfile7, 
            useInfo = "all", 
            pdfSW = TRUE)
 }

@@ -169,14 +169,24 @@ We use here all default settings and only ask to compute enrichment after retrie
 $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000 -e yes
 ```
 
-One additional file is created that contains results of enrichment in 'BP' (for: biological process) for the gene-list. Other GO categories ('MF' and 'CC') can be enriched with the '-c' parameters, the enrichment can be tuned in different ways using additional parameters (run locus2genes.R -h for more details).
+A folder is created in teh current folder with name 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all' to store enrichment results, other files are saved directly in the current folder.
 
-The resulting files include:
+Several files are created that contains results of enrichment in 'BP' (for: biological process) for the gene-list. Other GO categories ('MF' and 'CC') can be enriched with the '-c' parameters, and the enrichment can be tuned in different ways using additional parameters (run locus2genes.R -h for more details).
 
-* 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all.txt' summary report contains information about the enrichment and the top 10 results (the limit can be adapted with '-n').
+The enrichment result files saved in the folder include:
+
+BP-GOstats.png
+Graph_topGO-terms_classic_4_all.pdf
+BP-GOstats.pdf
+genes_in_sigGO.txt
+full-results.txt
+
+Graph_topGO-terms_classic_4_all.png
+
+* 'enrichment-summary.txt' summary report contains information about the enrichment and the top 10 results (the limit can be adapted with '-n').
 
 ```
-#### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 16:28:20
+#### locus2genes (©SP:BITS2014, v1.0), 2014-06-132014-06-13 09:42:33
 ### GO-BP enrichment results for locus: 3:3500000:4000000,5:1700000:1900000 (8 entrezIDs)
 ## against:'all' hs genes (25788 entrezIDs)
 ## organism :  hsapiens_gene_ensembl 
@@ -235,7 +245,7 @@ Annotation data:
 8  GO:0006687         glycosphingolipid metabolic process        62           1
 9  GO:0006119                   oxidative phosphorylation        64           1
 10 GO:0072358           cardiovascular system development       826           2
-   Expected     Fis
+   Expected  Fisher
 1      0.00 0.00054
 2      0.00 0.00081
 3      0.00 0.00403
@@ -253,7 +263,7 @@ Annotation data:
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
 
-* The full table of GO results (open it in your favorite worksheet application) 
+* The full table of GO results 'full-results.txt' (open it in your favorite worksheet application) 
 
 ```
 
@@ -272,11 +282,11 @@ GO:0006119	oxidative phosphorylation	64	1	0,02	0.01713
 
 ```
 
-* A figure reporting all significant GO terms together with their Fisher p.value as bars and the ratio of list-genes / term-genes for each GO term (term genes being the genes present in the current universe). A red line indicates the confidence limit used for the Fisher enrichment test (0.01). This figure is very similar to what **[Ingenuity](http://www.ingenuity.com)** provides for canonical pathway enrichment.
+* A figure 'BP-GOstats.pdf' reporting all significant GO terms together with their Fisher p.value as bars and the ratio of list-genes / term-genes for each GO term (term genes being the genes present in the current universe). A red line indicates the confidence limit used for the Fisher enrichment test (0.01). This figure is very similar to what **[Ingenuity](http://www.ingenuity.com)** provides for canonical pathway enrichment.
 
 <img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all/BP-GOstats.png" alt="GO graph" style="width: 400px;"/>
 
-* A GO-graph reporting the significant GO-terms (up to 10) in a hierarchical graph. This graph allows identifying related or embedded terms and decide which term to keep for further analysis.
+* A GO-graph 'Graph_topGO-terms_classic_4_all.pdf' reporting the significant GO-terms (up to 10) in a hierarchical graph. This graph allows identifying related or embedded terms and decide which term to keep for further analysis.
 
 <img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_allTop_GO-terms_classic_4_all.png" alt="GO graph" style="width: 600px;"/>
 
@@ -301,13 +311,14 @@ The second file generated during this run reports all genes on chr3 and chr5, it
 ```
 $>locus2genes.R -r 3:3500000:4000000,5:1700000:1900000 -e yes -b yes -f entrezIDs_3-1-198022430_5-1-180915260_hs.txt
 ```
+A new folder named 'BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-data' is created to store the enrichment results. Note the end of the folder name 'user-data' indicating that the universe used was not the full genome.
 
-The results of the enrichment are slightly different from above, as expected with a more focussed background set. Thi sis obviously a toy example and you will need to build your own local background based on a relevant biological hypotheses.
+The results of the enrichment are slightly different from above, as expected with a more focussed background set. This is obviously a toy example and you will need to build your own local background based on a relevant biological hypotheses.
 
 ```
-#### locus2genes (©SP:BITS2014, v1.0), 2014-06-102014-06-10 16:47:59
+#### locus2genes (©SP:BITS2014, v1.0), 2014-06-132014-06-13 10:26:56
 ### GO-BP enrichment results for locus: 3:3500000:4000000,5:1700000:1900000 (8 entrezIDs)
-## against:'entrezIDs_3-1-198022430_5-1-180915260_hs.txt' (2593 entrezIDs)
+## against:'entrezIDs_3-1-198022430_5-1-180915260_hs.txt' (2591 entrezIDs)
 ## organism :  hsapiens_gene_ensembl 
 
 ### GOdata summary:  
@@ -320,7 +331,7 @@ The results of the enrichment are slightly different from above, as expected wit
  Ontology:
    -  BP 
 
- 2593 available genes (all genes from the array):
+ 2591 available genes (all genes from the array):
    - symbol:  10752 101927193 101927215 27255 152330  ...
    - 8  significant genes. 
 
@@ -347,7 +358,7 @@ Annotation data:
     Significant genes: 4 
     Min. no. of genes annotated to a GO: 1 
     Nontrivial nodes: 86 
-    
+
 
 ### Enrichment results 
 
@@ -364,7 +375,7 @@ Annotation data:
 8  GO:0042775 mitochondrial ATP synthesis coupled elec...         6           1
 9  GO:0044255            cellular lipid metabolic process        86           2
 10 GO:0022900                    electron transport chain         9           1
-   Expected    Fis
+   Expected Fisher
 1      0.01 0.0053
 2      0.01 0.0053
 3      0.01 0.0053
@@ -382,15 +393,17 @@ Annotation data:
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
 
-<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-dataTop_GO-terms_classic_3_all.png" alt="GO graph" style="width: 600px;"/>
+<img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-data/BP-GOstats.png" alt="GO graph" style="width: 400px;"/>
+
+<img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-data/Graph_topGO-terms_classic_3_all.png" alt="GO graph" style="width: 600px;"/>
 
 **Please read the information about the other available optional parameters to tune this utility to best fit your needs.*
 
-Results of the commands detailed in this page are stored in the **[examples ](examples/)** folder
+REM: Results of the commands detailed in this page are stored in the **[examples ](examples/)** folder
 
 # REFERENCES
 
-When using this code, please cite the makers of the different embedded packages.
+When using this code, please do not forget to cite the makers of the different embedded packages.
 
 ------------
 enjoy!

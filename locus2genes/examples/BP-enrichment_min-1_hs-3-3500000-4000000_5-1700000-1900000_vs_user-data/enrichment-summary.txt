@@ -1,0 +1,75 @@
+#### locus2genes (©SP:BITS2014, v1.0), 2014-06-132014-06-13 10:26:56
+### GO-BP enrichment results for locus: 3:3500000:4000000,5:1700000:1900000 (8 entrezIDs)
+## against:'entrezIDs_3-1-198022430_5-1-180915260_hs.txt' (2591 entrezIDs)
+## organism :  hsapiens_gene_ensembl 
+
+### GOdata summary:  
+
+------------------------- topGOdata object -------------------------
+
+ Description:
+   -  Fisher enrichment test 
+
+ Ontology:
+   -  BP 
+
+ 2591 available genes (all genes from the array):
+   - symbol:  10752 101927193 101927215 27255 152330  ...
+   - 8  significant genes. 
+
+ 1516 feasible genes (genes that can be used in the analysis):
+   - symbol:  10752 27255 152330 3568 51095  ...
+   - 4  significant genes. 
+
+ GO graph (nodes with at least  1  genes):
+   - a graph with directed edges
+   - number of nodes = 7026 
+   - number of edges = 15923 
+
+------------------------- topGOdata object -------------------------
+
+
+## results for Fisher
+
+Description: Fisher enrichment test 
+Ontology: BP 
+'classic' algorithm with the 'fisher' test
+7026 GO terms scored: 3 terms with p < 0.01
+Annotation data:
+    Annotated genes: 1516 
+    Significant genes: 4 
+    Min. no. of genes annotated to a GO: 1 
+    Nontrivial nodes: 86 
+
+
+### Enrichment results 
+
+### Fisher test summary : 
+ 
+        GO.ID                                        Term Annotated Significant
+1  GO:0048560 establishment of anatomical structure or...         2           1
+2  GO:0048561          establishment of organ orientation         2           1
+3  GO:0070584                 mitochondrion morphogenesis         2           1
+4  GO:0006120 mitochondrial electron transport, NADH t...         5           1
+5  GO:0006119                   oxidative phosphorylation         6           1
+6  GO:0010259              multicellular organismal aging         6           1
+7  GO:0042773    ATP synthesis coupled electron transport         6           1
+8  GO:0042775 mitochondrial ATP synthesis coupled elec...         6           1
+9  GO:0044255            cellular lipid metabolic process        86           2
+10 GO:0022900                    electron transport chain         9           1
+   Expected Fisher
+1      0.01 0.0053
+2      0.01 0.0053
+3      0.01 0.0053
+4      0.01 0.0131
+5      0.02 0.0158
+6      0.02 0.0158
+7      0.02 0.0158
+8      0.02 0.0158
+9      0.23 0.0177
+10     0.02 0.0236
+
+
+---------
+## REFERENCE: 
+[1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "

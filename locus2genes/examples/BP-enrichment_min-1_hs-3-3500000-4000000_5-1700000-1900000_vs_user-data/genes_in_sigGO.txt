@@ -1,0 +1,4 @@
+GO.ID	Term	Annotated	Significant	Expected	Fisher	present	absent	ratio
+GO:0048560	establishment of anatomical structure or...	2	1	0,01	0,0053	50805	7478	50
+GO:0048561	establishment of organ orientation	2	1	0,01	0,0053	50805	7478	50
+GO:0070584	mitochondrion morphogenesis	2	1	0,01	0,0053	4726	10087	50

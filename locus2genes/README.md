@@ -262,6 +262,7 @@ GO:0048561	establishment of organ orientation	2	1	0	0.00054
 GO:0048560	establishment of anatomical structure or...	3	1	0	0.00081
 GO:0070584	mitochondrion morphogenesis	15	1	0	0.00403
 GO:0010259	multicellular organismal aging	30	1	0,01	0.00806
+#----------- confidence limit was reached here -------------------------
 GO:0006120	mitochondrial electron transport, NADH t...	39	1	0,01	0.01046
 GO:0042773	ATP synthesis coupled electron transport	50	1	0,01	0.01340
 GO:0042775	mitochondrial ATP synthesis coupled elec...	50	1	0,01	0.01340
@@ -271,7 +272,11 @@ GO:0006119	oxidative phosphorylation	64	1	0,02	0.01713
 
 ```
 
-* A GO-graph reporting the significant GO-terms (up to 10) in a hierarchical graph.
+* A figure reporting all significant GO terms together with their Fisher p.value as bars and the ratio of list-genes / term-genes for each GO term (term genes being the genes present in the current universe). A red line indicates the confidence limit used for the Fisher enrichment test (0.01). This figure is very similar to what **[Ingenuity](http://www.ingenuity.com)** provides for canonical pathway enrichment.
+
+<img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all/BP-GOstats.png" alt="GO graph" style="width: 400px;"/>
+
+* A GO-graph reporting the significant GO-terms (up to 10) in a hierarchical graph. This graph allows identifying related or embedded terms and decide which term to keep for further analysis.
 
 <img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_allTop_GO-terms_classic_4_all.png" alt="GO graph" style="width: 600px;"/>
 
@@ -381,6 +386,7 @@ Annotation data:
 
 **Please read the information about the other available optional parameters to tune this utility to best fit your needs.*
 
+Results of the commands detailed in this page are stored in the **[examples ](examples/)** folder
 
 # REFERENCES
 

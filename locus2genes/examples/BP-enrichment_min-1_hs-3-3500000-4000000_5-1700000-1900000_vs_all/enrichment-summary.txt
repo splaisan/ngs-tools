@@ -1,4 +1,4 @@
-#### locus2genes (©SP:BITS2014, v1.0), 2014-06-122014-06-12 19:14:04
+#### locus2genes (©SP:BITS2014, v1.0), 2014-06-132014-06-13 09:42:33
 ### GO-BP enrichment results for locus: 3:3500000:4000000,5:1700000:1900000 (8 entrezIDs)
 ## against:'all' hs genes (25788 entrezIDs)
 ## organism :  hsapiens_gene_ensembl 

@@ -288,7 +288,7 @@ GO:0006119	oxidative phosphorylation	64	1	0,02	0.01713
 
 * A GO-graph 'Graph_topGO-terms_classic_4_all.pdf' reporting the significant GO-terms (up to 10) in a hierarchical graph. This graph allows identifying related or embedded terms and decide which term to keep for further analysis.
 
-<img src="examples/BP-enrichment__min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_allTop_GO-terms_classic_4_all.png" alt="GO graph" style="width: 600px;"/>
+<img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_all/Graph_topGO-terms_classic_4_all.png" alt="GO graph" style="width: 600px;"/>
 
 ## An example with 'GO'-enrichment against a user-defined background (universe)
 

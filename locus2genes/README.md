@@ -393,6 +393,8 @@ Annotation data:
 [1] "Adrian Alexa and Jorg Rahnenfuhrer (2010). topGO: topGO: Enrichment analysis for Gene Ontology. R package version 2.17.0. "
 ```
 
+**Figures produced during the enrichment analysis**
+
 <img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-data/BP-GOstats.png" alt="GO graph" style="width: 400px;"/>
 
 <img src="examples/BP-enrichment_min-1_hs-3-3500000-4000000_5-1700000-1900000_vs_user-data/Graph_topGO-terms_classic_3_all.png" alt="GO graph" style="width: 600px;"/>

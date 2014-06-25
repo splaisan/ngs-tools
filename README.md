@@ -7,7 +7,7 @@ A perl script parsing n-lines of fastQ data to identify teh rang eof ascii score
 
 # **avgQdist2linePlot.R**
 
-A R script taking output from the popular [fastx toolkit](http://hannonlab.cshl.edu/fastx_toolkit/) to plot a line graph of quality scores.
+A R script taking output from the popular [fastx toolkit](http://hannonlab.cshl.edu/fastx_toolkit/) to plot a normalized line graph (PDF) of base frequencies. This once was needed to identify base bias across reads. One example output is saved [here](pictures/avgQdist2linePlot.png).
 
 # **locus2genes**
 

@@ -3,7 +3,7 @@ ngstools
 
 # **fastq_detect.pl**
 
-A perl script parsing n-lines of fastQ data to identify teh rang eof ascii score used and mathicng them to what is expected for the main flavors known today. The result is a list of compatible fastQ versions.
+The perl script **[fastq_detect.pl](fastq-tools/fastq_detect.pl)** is parsing n-lines of fastQ data to identify teh rang eof ascii score used and mathicng them to what is expected for the main flavors known today. The result is a list of compatible fastQ versions.
 
 # **avgQdist2linePlot.R**
 

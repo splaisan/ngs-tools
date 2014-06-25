@@ -1,6 +1,14 @@
 ngstools
 ========
 
+# **fastq_detect.pl**
+
+A perl script parsing n-lines of fastQ data to identify teh rang eof ascii score used and mathicng them to what is expected for the main flavors known today. The result is a list of compatible fastQ versions.
+
+# **avgQdist2linePlot.R**
+
+A R script taking output from the popular [fastx toolkit](http://hannonlab.cshl.edu/fastx_toolkit/) to plot a line graph of quality scores.
+
 # **locus2genes**
 
 A script using R packages to query biomaRt and fetch genes in a given locus (loci) before computing GO enrichment on the gene list. Please read the [dedicated page](locus2genes/README.md) for more info.

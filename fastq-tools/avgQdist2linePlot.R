@@ -7,16 +7,14 @@
 #
 # Stéphane Plaisance - VIB-BITS - 2010-07-08 v2.2
 
-# CGI read length is 2x35=70 - adapt here for other source
-readlen<-101
 args <- commandArgs()
 myfile <- args[6]
 mypath <- args[7]
 name<-sub( ".txt*$", "_", basename(myfile) )
 graphname=paste(mypath, "/", name, "lineplot.pdf", sep="")
-#graphname=sprintf("%s%s", name, "lineplot.pdf")
 
 data<-read.table(myfile, header=TRUE, sep="\t")
+readlen <- nrow(data)
 
 # calculate the mean on whole dataset
 meanA <- mean(data$A_Count)
@@ -24,7 +22,7 @@ meanT <- mean(data$T_Count)
 meanG <- mean(data$G_Count)
 meanC <- mean(data$C_Count)
 
-#transform to average from the mean
+# transform to average from the mean
 data$A_Count <- 10*(data$A_Count-meanA)/max(data$Max_count)
 data$T_Count <- 10*(data$T_Count-meanT)/max(data$Max_count)
 data$G_Count <- 10*(data$G_Count-meanG)/max(data$Max_count)
@@ -37,14 +35,44 @@ max <- 2
 pdf(file=graphname, bg="white", paper="a4")
 op<-par(mfrow=c(1,1), mex=0.75)
 
-plot(data$A_Count~data$column, type="s", col="#5050FF", lwd=1.5, xlab="read-position", ylab="count-avg (a.u.)", xlim=c(1,readlen), ylim=c(min,max), main=paste("normalized base frequency for",name,""))
-lines(data$T_Count~data$column, type="s", col="#E6E600", lwd=1.5, xlim=c(1,readlen), ylim=c(min,max))
-lines(data$G_Count~data$column, type="s", col="#00C000", lwd=1.5, xlim=c(1,readlen), ylim=c(min,max))
-lines(data$C_Count~data$column, type="s", col="#E00000", lwd=1.5, xlim=c(1,readlen), ylim=c(min,max))
+plot(data$A_Count~data$column, 
+	type="s", 
+	col="#5050FF", 
+	lwd=1.5, 
+	xlab="read-position", 
+	ylab="count-avg (a.u.)", 
+	xlim=c(1,readlen), 
+	ylim=c(min,max), 
+	main=paste("normalized base frequency
+ for", name, ""))
+	
+lines(data$T_Count~data$column, 
+	type="s", 
+	col="#E6E600", 
+	lwd=1.5, 
+	xlim=c(1,readlen), 
+	ylim=c(min,max))
+	
+lines(data$G_Count~data$column, 
+	type="s", 
+	col="#00C000", 
+	lwd=1.5, 
+	xlim=c(1,readlen), 
+	ylim=c(min,max))
+	
+lines(data$C_Count~data$column, 
+	type="s", 
+	col="#E00000", 
+	lwd=1.5, 
+	xlim=c(1,readlen), 
+	ylim=c(min,max))
 
 legend(60, 2, c("A", "T", "G", "C"), col = c("#5050FF","#E6E600","#00C000","#E00000"),
-       text.col = "grey1", lty = c(1, 1, 1, 1), lwd= c(2, 2, 2, 2),
-       merge = TRUE, bg = 'white')
+       text.col = "grey1", 
+       lty = c(1, 1, 1, 1), 
+       lwd= c(2, 2, 2, 2),
+       merge = TRUE, 
+       bg = 'white')
 
 # dev.copy(pdf, file=graphname)
 dev.off()

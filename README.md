@@ -1,4 +1,4 @@
-![ngstools](pictures/toolbox.png)
+![ngstools](pictures/toolbox.png) - NGS-Tools
 ========
 # Analysis tools
 

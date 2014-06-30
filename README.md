@@ -1,7 +1,5 @@
-![](pictures/toolbox.png)
-ngstools
+![ngstools](pictures/toolbox.png)
 ========
-
 # Analysis tools
 
 ## **locus2genes**

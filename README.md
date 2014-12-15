@@ -28,7 +28,7 @@ The awk script **[isFastqUniq.sh](fastq-tools/isFastqUniq.sh)** is parsing fastQ
 
 ## **deduplicateFastq.pl**
 
-The perl script **[deduplicateFastq.pl](fastq-tools/deduplicateFastq.pl)** is parsing two fastQ paired files (can be flat or .gz) and filters out reads found more than once based on their exact names. This script was developped due to data extracted from BAM that presented the same reads multiple times due to alt mapping results. The script will end if pair sync is not valid.
+The perl script **[deduplicateFastq.pl](fastq-tools/deduplicateFastq.pl)** is parsing two paired fastQfiles (can be flat or .gz) and filters out reads found more than once based on their exact names. This script was developped for data extracted from BAM that presented the same reads multiple times due to alternate mapping results. The script will end if pair sync is not valid (same name for both mates) or if fastq 4-line structure is lost.
 
 # Formatting tools for SAM / BAM data
 

@@ -22,6 +22,14 @@ The perl script **[fastq_detect.pl](fastq-tools/fastq_detect.pl)** is parsing n-
 
 The R script **[avgQdist2linePlot.R](fastq-tools/avgQdist2linePlot.R)** is taking output from the popular [fastx toolkit](http://hannonlab.cshl.edu/fastx_toolkit/) to plot a normalized line graph (PDF) of base frequencies. This once was needed to identify base bias across reads. One example output is saved [here](pictures/avgQdist2linePlot.png).
 
+## **isFastqUniq.sh**
+
+The awk script **[isFastqUniq.sh](fastq-tools/isFastqUniq.sh)** is parsing fastQ data to identify duplicate read names and prints out names of reads present more than once. This is a very basic script.
+
+## **deduplicateFastq.pl**
+
+The perl script **[deduplicateFastq.pl](fastq-tools/deduplicateFastq.pl)** is parsing two fastQ paired files (can be flat or .gz) and filters out reads found more than once based on their exact names. This script was developped due to data extracted from BAM that presented the same reads multiple times due to alt mapping results. The script will end if pair sync is not valid.
+
 # Formatting tools for SAM / BAM data
 
 ## **uniq_mappings.pl**

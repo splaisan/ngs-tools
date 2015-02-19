@@ -10,7 +10,11 @@ A script using R packages to query biomaRt and fetch genes in a given locus (loc
 
 ## **dedupFastaSeq.pl**
 
-Will parse a multifasta file and keep only one copy of each sequence based on its name (no sequence comparison is operated). Requires BioPerl to work.
+The BIO-perl script [dedupFastaSeq.pl](fasta-tools/dedupFastaSeq.pl) will parse a multifasta file and keep only one copy of each sequence based on its name (no sequence comparison is operated). Requires BioPerl to work.
+
+## **fastaByLength.pl**
+
+The BIO-perl script [fastaByLength.pl](fasta-tools/fastaByLength.pl) will filter a multifasta file and keep only sequence with length > min and <max values. Was created to filter genome assemblies containing multiple small files.
 
 # Formatting tools for FASTQ data
 

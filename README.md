@@ -22,6 +22,10 @@ The BIO-perl script [fastaByLength.pl](fasta-tools/fastaByLength.pl) will filter
 
 The perl script **[fastq_detect.pl](fastq-tools/fastq_detect.pl)** is parsing n-lines of fastQ data to identify the range of ascii score used and matching them to what is expected for the main flavors known today. The result is a list of compatible fastQ versions.
 
+### **CLC-to-BAM**
+
+The bash script **[CLC-to-BAM.sh](fastq-tools/CLC-to-BAM.sh)**  takes a BAM file and two fastq files, all exported from a CLC genomic reference mapping experiment and combines them all into ONE BAM file. Some validation and fix are applied but the BAM is not 100% clean (although sufficiently for GCAT analysis).
+
 ### **avgQdist2linePlot.R**
 
 The R script **[avgQdist2linePlot.R](fastq-tools/avgQdist2linePlot.R)** is taking output from the popular [fastx toolkit](http://hannonlab.cshl.edu/fastx_toolkit/) to plot a normalized line graph (PDF) of base frequencies. This once was needed to identify base bias across reads. One example output is saved [here](pictures/avgQdist2linePlot.png).

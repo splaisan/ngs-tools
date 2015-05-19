@@ -24,7 +24,7 @@ The perl script **[fastq_detect.pl](fastq-tools/fastq_detect.pl)** is parsing n-
 
 ### **CLC-to-BAM**
 
-The bash script **[CLC-to-BAM.sh](fastq-tools/CLC-to-BAM.sh)**  takes a BAM file and two fastq files, all exported from a CLC genomic reference mapping experiment and combines them all into ONE BAM file. Some validation and fix are applied but the BAM is not 100% clean (although sufficiently for GCAT analysis).
+The bash script **[CLC-to-BAM.sh](fastq-tools/CLC-to-BAM.sh)**  takes a BAM file and two fastq files containing unmapped reads (paired and single, all tree files were exported from a CLC genomic reference mapping experiment) and combines them all into ONE BAM file. Some validation and fix are applied but the BAM is not 100% clean (although sufficiently for GCAT analysis).
 
 ### **avgQdist2linePlot.R**
 

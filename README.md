@@ -62,7 +62,7 @@ Usage: samtools view -h <name_sorted.bam> |
 
 ### **bed2picard-list.sh**
 
-Some Picard tools, like **CalculateHsMetrics** require list as input. The Picard list format is a hybrid format including a sam header and almost-BED data. The BED data shoudl be 5-column and the start coordinate increased by 1 to reflect the 1-closed expecations of Picard. A simple bash script **[bed2picard-list.sh](bam-tools/bed2picard-list.sh)** was created to streamline the process of creating a list file from a **bed5** and **dict** files.
+Some Picard tools, like **CalculateHsMetrics** require list as input. The Picard list format is a hybrid format including a sam header and almost-BED data. The BED data has 5-columns and the start coordinate increased by 1 to reflect the 1-closed coordinate expectations of Picard. A simple bash script **[bed2picard-list.sh](bam-tools/bed2picard-list.sh)** was created to streamline the process of creating a list file from a **bed5** and **dict** files.
 
 
 <h4>Please send comments and feedback to <a href="mailto:bits@vib.be">bits@vib.be</a></h4>

@@ -48,7 +48,13 @@ The Perl **[uniq_mappings.pl](bam-tools/uniq_mappings.pl)** is reading from a **
 
 Usage: This script was created to extract uniquely mapped reads from a public BAM file and convert the mapping data back to FastQ. The obtained reads where then re-mapped to another reference genome build.
 
-<h4>Please send comments and feedback to <a href="mailto:bits@vib.be">bits@vib.be</a></h4>
+### **bam_re-pair.pl**
+
+The Perl **[bam_re-pair.pl](bam-tools/bam_re-pair.pl)** script gets data from a piped samtools command and filters paired reads only to create a new BAM file with help of samtools.
+
+Usage: samtools view -h <name_sorted.bam> | 
+	bam_re-pair.pl | 
+	samtools view -bSo <name_sorted.filtered.bam> -
 
 ## Formatting tool for annotation data
 
@@ -56,6 +62,8 @@ Usage: This script was created to extract uniquely mapped reads from a public BA
 
 Some Picard tools, like **CalculateHsMetrics** require list as input. The Picard list format is a hybrid format including a sam header and almost-BED data. The BED data shoudl be 5-column and the start coordinate increased by 1 to reflect the 1-closed expecations of Picard. A simple bash script **[bed2picard-list.sh](bam-tools/bed2picard-list.sh)** was created to streamline the process of creating a list file from a **bed5** and **dict** files.
 
+
+<h4>Please send comments and feedback to <a href="mailto:bits@vib.be">bits@vib.be</a></h4>
 
 ------------
 

@@ -40,6 +40,9 @@ The BIO-perl script [fastaSortLength.pl](fasta-tools/fastaSortLength.pl) will so
 ### **fastq_detect.pl**
 
 The perl script **[fastq_detect.pl](fastq-tools/fastq_detect.pl)** is parsing n-lines of fastQ data to identify the range of ascii score used and matching them to what is expected for the main flavors known today. The result is a list of compatible fastQ versions.
+```bash
+## Usage: fastq_detect.pl <fastq file> <opt:sample-size (100)>
+```
 
 ### **CLC-to-BAM**
 

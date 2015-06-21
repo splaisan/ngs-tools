@@ -15,10 +15,22 @@ The BIO-perl script [dedupFastaSeq.pl](fasta-tools/dedupFastaSeq.pl) will parse 
 ### **fastaFiltLength.pl**
 
 The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will filter a multifasta file and keep only sequence with length > min and <max values. Was created to filter genome assemblies containing multiple small files.
+```bash
+## Usage: fastaFiltLength.pl <-i fasta_file (required)>
+# Additional optional parameters are:
+# <-o outfile_name (filtered_)>
+# <-m minsize (undef)>
+# <-x maxsize (undef)>
+# <-h to display this help>
+```
 
 ### **fastaSortLength.pl**
 
 The BIO-perl script [fastaSortLength.pl](fasta-tools/fastaSortLength.pl) will sorts a multifasta file by decreasing or increasing order. Was created to clean input fasta files before applying Knicker (BionanoGenomics).
+```bash
+## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=increasing | 'd'=decreasing)>
+# <-h to display this help>
+```
 
 ## Formatting tools for FASTQ data
 

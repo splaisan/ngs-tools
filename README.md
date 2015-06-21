@@ -11,6 +11,9 @@ A script using R packages to query biomaRt and fetch genes in a given locus (loc
 ### **dedupFastaSeq.pl**
 
 The BIO-perl script [dedupFastaSeq.pl](fasta-tools/dedupFastaSeq.pl) will parse a multifasta file and keep only one copy of each sequence based on its name (no sequence comparison is operated). Requires BioPerl to work.
+``bash
+## Usage: dedupFastaSeq.pl <fasta_input file> <output file name>
+```
 
 ### **fastaFiltLength.pl**
 

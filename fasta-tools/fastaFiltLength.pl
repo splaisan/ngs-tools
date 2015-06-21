@@ -3,7 +3,11 @@
 # Filter multifasta file by min and max sequence lengths
 # adapted from http://seqanswers.com/forums/archive/index.php/t-13966.html
 #
-# Stephane Plaisance, BITS 2015-02-18
+# Stephane Plaisance (VIB-NC+BITS) 2015/02/18; v1.0
+# 2015/06/21; v1.1
+# supports compressed files (zip, gzip, bgzip)
+#
+# visit our Git: https://github.com/BITS-VIB
 
 use warnings;
 use strict;
@@ -36,7 +40,7 @@ if ( defined $minlen && defined $maxlen && $maxlen < $minlen) {
 }
 
 # filehandles
-my $seq_in = Bio::SeqIO -> new( -format => 'fasta', -file => $infile );
+my $seq_in = OpenArchiveFile($infile);
 my $seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
 
 # counters
@@ -72,3 +76,23 @@ print STDERR "# too long: ".$longer." sequences\n";
 print STDERR "# kept: ".$kept." sequences\n";
 
 exit 0;
+
+#### Subs ####
+sub OpenArchiveFile {
+    my $infile = shift;
+    my $FH;
+    if ($infile =~ /.fa$|.fasta$/) {
+    $FH = Bio::SeqIO -> new(-file => "$infile", -format => 'Fasta');
+    }
+    elsif ($infile =~ /.bz2$/) {
+    $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile |", -format => 'Fasta');
+    }
+    elsif ($infile =~ /.gz$|.zip$/) {
+    $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile |", -format => 'Fasta');
+    } else {
+	die ("$!: do not recognise file type $infile");
+	# if this happens add, the file type with correct opening proc
+    }
+    return $FH;
+}
+

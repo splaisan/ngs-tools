@@ -14,7 +14,7 @@ use Bio::SeqIO;
 use Getopt::Std;
 use File::Tee qw(tee);
 
-my $usage="## Usage: findNregions.pl <-i fasta-file> <-o size-order ('i'=increasing | 'd'=decreasing)>
+my $usage="## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=increasing | 'd'=decreasing)>
 # <-h to display this help>";
 
 # disable buffering to get output during long process (loop)

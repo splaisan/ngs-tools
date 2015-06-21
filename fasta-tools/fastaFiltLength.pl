@@ -14,7 +14,7 @@ use strict;
 use Bio::SeqIO;
 use Getopt::Std;
 
-my $usage="## Usage: fastaByLength.pl <-i fasta_file (required)>
+my $usage="## Usage: fastaFiltLength.pl <-i fasta_file (required)>
 # Additional optional parameters are:
 # <-o outfile_name (filtered_)>
 # <-m minsize (undef)>

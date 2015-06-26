@@ -5,7 +5,7 @@
 # supports compressed files (zip, gzip, bgzip)
 #
 # Stephane Plaisance (VIB-NC+BITS) 2015/06/21; v1.0
-# add min and max; v1.1
+# add min and max and zipping; v1.1
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -19,6 +19,7 @@ my $usage="## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=incr
 # Additional optional parameters are:
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
+# <-z zip results (default OFF)>
 # <-h to display this help>";
 
 # disable buffering to get output during long process (loop)
@@ -27,20 +28,28 @@ $|=1;
 ####################
 # declare variables
 ####################
-getopts('i:o:m:x:h');
-our($opt_i, $opt_o, $opt_m, $opt_x, $opt_h);
+getopts('i:o:m:x:zh');
+our($opt_i, $opt_o, $opt_m, $opt_x, $opt_z, $opt_h);
 
 my $fastain = $opt_i || die $usage."\n";
 my $order = $opt_o || die $usage."\n";
 $order =~ /^(i|d)$/ || die "# order should be 'i'=increasing | 'd'=decreasing !";
 my $minlen = $opt_m || undef;
 my $maxlen = $opt_x || undef;
+my $zipit = defined($opt_z) || undef;
 defined($opt_h) && die $usage."\n";
 
 # define filehandlers
 my $in = OpenArchiveFile($fastain);
 my $fastaout = $order."_".$fastain;
-my $out = Bio::SeqIO -> new(-file => ">$fastaout", -format => 'Fasta');
+
+# add zipping option
+my $out;
+if ( defined($zipit) ) {
+		$out = Bio::SeqIO -> new(-file => " | gzip -c > $fastaout".".zip", -format => 'Fasta');
+	} else {
+		$out = Bio::SeqIO -> new(-file => "> $fastaout", -format => 'Fasta');
+	}
 
 # variables
 our $count = 0;
@@ -79,23 +88,26 @@ while( my $seq_obj = $in->next_seq() ) {
 	$kept_width += $len;
 	push @AoH, {
 		seqobj => $seq_obj,
-		seqlen => $seq_obj->length
+		seqlen => $len
 		};
 	}
 
-my $totkb = printf( "%.3f", ($width/1000) );
-my $keptkb = printf( "%.3f", ($kept_width/1000) );
+# width values
+my $totmb = $width/1000000;
+my $keptmb = $kept_width/1000000;
+my $keptpc = 100*$keptmb/$totmb;
 
 # counts
+print STDERR "# Processing results\n";
 print STDERR "# processed: ".$count." sequences\n";
-print STDERR "# tot-width: ".$totkb." kb\n";
+print STDERR "# tot-width: ".sprintf("%.3f",$totmb)." Mb\n";
 print STDERR "# kept: ".$kept." sequences\n";
-print STDERR "# kept width: ".$keptkb." kb\n";
+print STDERR "# kept width: ".sprintf("%.3f",$keptmb)." Mb (".sprintf("%.2f",$keptpc)."%)\n";
 print STDERR "# too short: ".$shorter." sequences\n";
 print STDERR "# too long: ".$longer." sequences\n";
 
 # sort AoH by length
-print STDERR "# .... sorting sequences\n";
+print STDERR "# .. sorting sequences\n";
 
 if ($order eq "i") {
 	@sorted =  sort { $a->{seqlen} <=> $b->{seqlen} } @AoH;
@@ -111,7 +123,7 @@ foreach my $hash_ref (@sorted) {
 	}
 
 # output sorted data to file
-print STDERR "# sorted ".$kept." records out of ".$count."\n\n";
+print STDERR "#\n# sorted ".$kept." records out of ".$count."\n\n";
 
 exit 0;
 

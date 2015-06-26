@@ -42,11 +42,12 @@ defined($opt_h) && die $usage."\n";
 # define filehandlers
 my $in = OpenArchiveFile($fastain);
 my $fastaout = $order."_".$fastain;
+my $fastaoutz = $order."_".$fastain.".zip";
 
 # add zipping option
 my $out;
 if ( defined($zipit) ) {
-		$out = Bio::SeqIO -> new(-file => " | gzip -c > $fastaout".".zip", -format => 'Fasta');
+		$out = Bio::SeqIO -> new(-file => " | gzip -c > $fastaoutz", -format => 'Fasta');
 	} else {
 		$out = Bio::SeqIO -> new(-file => "> $fastaout", -format => 'Fasta');
 	}

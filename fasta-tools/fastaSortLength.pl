@@ -41,7 +41,7 @@ defined($opt_h) && die $usage."\n";
 
 # define filehandlers
 my $outpath = dirname($fastain);
-my @sufx = ( ".fa", ".fasta", ".fa.gz", ".fa.zip", ".fasta.gz", ".fasta.zip");
+my @sufx = ( ".fa", ".fa.gz", ".fa.zip", ".fasta", ".fasta.gz", ".fasta.zip");
 my $outbase = basename( $fastain, @sufx );
 my $fastaout = $outpath."/".$order."_".$outbase.".fa";
 my $fastaoutz = $outpath."/".$order."_".$outbase.".fa.zip";

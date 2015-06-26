@@ -29,9 +29,12 @@ The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will fi
 
 ### **fastaSortLength.pl**
 
-The BIO-perl script [fastaSortLength.pl](fasta-tools/fastaSortLength.pl) will sorts a multifasta file by decreasing or increasing order. Was created to clean input fasta files before applying Knicker (BionanoGenomics).
+The BIO-perl script [fastaSortLength.pl](fasta-tools/fastaSortLength.pl) will sorts a multifasta file by decreasing or increasing order. It also allows filtering by size and exclude sequences that woulsd be too small or too large. Was created to clean input fasta files before applying Knicker (BionanoGenomics).
 ```bash
 ## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=increasing | 'd'=decreasing)>
+# Additional optional parameters are:
+# <-m minsize (undef)>
+# <-x maxsize (undef)>
 # <-h to display this help>
 ```
 

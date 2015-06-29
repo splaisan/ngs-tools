@@ -44,7 +44,7 @@ my $outpath = dirname($fastain);
 my @sufx = ( ".fa", ".fa.gz", ".fa.zip", ".fasta", ".fasta.gz", ".fasta.zip");
 my $outbase = basename( $fastain, @sufx );
 my $fastaout = $outpath."/".$order."_".$outbase.".fa";
-my $fastaoutz = $outpath."/".$order."_".$outbase.".fa.zip";
+my $fastaoutz = $outpath."/".$order."_".$outbase.".fa.gz";
 
 # bioperl handler
 my $in = OpenArchiveFile($fastain);
@@ -143,8 +143,11 @@ sub OpenArchiveFile {
     elsif ($infile =~ /.bz2$/) {
     $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile |", -format => 'Fasta');
     }
-    elsif ($infile =~ /.gz$|.zip$/) {
+    elsif ($infile =~ /.gz$/) {
     $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile |", -format => 'Fasta');
+    }
+    elsif ($infile =~ /.zip$/) {
+    $FH = Bio::SeqIO -> new(-file => "unzip -c $infile |", -format => 'Fasta');
     } else {
 	die ("$!: do not recognise file type $infile");
 	# if this happens add, the file type with correct opening proc

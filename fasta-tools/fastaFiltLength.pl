@@ -46,7 +46,7 @@ my $seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
 # counters
 my $count = 0;
 my $kept = 0;
-my $shorter =0;
+my $shorter = 0;
 my $longer = 0;
 
 while( my $seq = $seq_in -> next_seq() ) {
@@ -87,12 +87,12 @@ sub OpenArchiveFile {
     elsif ($infile =~ /.bz2$/) {
     $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile |", -format => 'Fasta');
     }
-    elsif ($infile =~ /.gz$|.zip$/) {
+    elsif ($infile =~ /.gz$/) {
     $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile |", -format => 'Fasta');
+    }
+    elsif ($infile =~ /.zip$/) {
+    $FH = Bio::SeqIO -> new(-file => "unzip -c $infile |", -format => 'Fasta');
     } else {
 	die ("$!: do not recognise file type $infile");
 	# if this happens add, the file type with correct opening proc
     }
-    return $FH;
-}
-

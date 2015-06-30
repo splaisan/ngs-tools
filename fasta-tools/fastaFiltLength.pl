@@ -96,3 +96,5 @@ sub OpenArchiveFile {
 	die ("$!: do not recognise file type $infile");
 	# if this happens add, the file type with correct opening proc
     }
+    return $FH;
+}

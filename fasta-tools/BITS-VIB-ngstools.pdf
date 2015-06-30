@@ -19,7 +19,7 @@ my $usage="## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=incr
 # Additional optional parameters are:
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
-# <-z gzip results (default OFF)>
+# <-z zip results (default OFF)>
 # <-h to display this help>";
 
 # disable buffering to get output during long process (loop)

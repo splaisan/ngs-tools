@@ -6,6 +6,8 @@
 # Stephane Plaisance (VIB-NC+BITS) 2015/02/18; v1.0
 # 2015/06/21; v1.1
 # supports compressed files (zip, gzip, bgzip)
+# 2015/09/29; v1.2
+# add total and filtered lenths
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -45,13 +47,16 @@ my $seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
 
 # counters
 my $count = 0;
+my $totlen = 0;
 my $kept = 0;
+my $keptlen = 0;
 my $shorter = 0;
 my $longer = 0;
 
 while( my $seq = $seq_in -> next_seq() ) {
 	$count++;
 	my $lseq = $seq->length;
+	$totlen += $lseq;
 
 	# filter by size
 	if (defined $minlen && $lseq < $minlen) {
@@ -66,14 +71,17 @@ while( my $seq = $seq_in -> next_seq() ) {
 
 	# otherwise print out
 	$kept++;
+	$keptlen += $lseq;
 	$seq_out -> write_seq($seq);
 }
 
 # print counts to stderr
 print STDERR "# processed: ".$count." sequences\n";
+print STDERR "# total length: ".$totlen." bps\n";
 print STDERR "# too short: ".$shorter." sequences\n";
 print STDERR "# too long: ".$longer." sequences\n";
 print STDERR "# kept: ".$kept." sequences\n";
+print STDERR "# kept length: ".$keptlen." bps\n";
 
 exit 0;
 

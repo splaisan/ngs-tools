@@ -8,6 +8,30 @@ A script using R packages to query biomaRt and fetch genes in a given locus (loc
 
 ## Formatting tools for FASTA data
 
+### **restrict2bed.pl**
+
+The BIO-perl script [restrict2bed.pl](fasta-tools/restrict2bed.pl) will parse a multifasta file and look for one or several combined RE sites on both strands; matches are reported in BED format to be used with BedTools (requires BioPerl and several cpan modules to work, see header).
+```bash
+## Usage: restrict2bed.pl <-i fasta-file>
+# <-n 'nicker(s)', multiple allowed separated by ',')>
+#  'Nt-BspQI' => 'GCTCTTC',
+#  'Nt-BbvCI' => 'CCTCAGC',
+#  'Nb-BsMI'  => 'GAATGC',
+#  'Nb-BsrDI' => 'GCAATG'
+# Additional optional parameters are:
+# <-l minimal length for dna sequence (20000)>
+# <-h to display this help>
+```
+
+### **fasta2chromsizes.pl**
+
+The BIO-perl script [dedupFastaSeq.pl](fasta-tools/fasta2chromsizes.pl) create a file reporting chromosome lengths from a multifasta file. Such file is required for BedTools to operate on intervals (requires BioPerl for parsing fasta).
+```bash
+## Usage: fasta2chromsizes.pl <-i fasta-file>
+# Additional optional parameters are:
+# <-l minimal length for dna sequence (20000)>
+# <-h to display this help>
+```
 ### **dedupFastaSeq.pl**
 
 The BIO-perl script [dedupFastaSeq.pl](fasta-tools/dedupFastaSeq.pl) will parse a multifasta file and keep only one copy of each sequence based on its name (no sequence comparison is operated). Requires BioPerl to work.

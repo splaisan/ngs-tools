@@ -3,7 +3,8 @@
 # fasta2chromsizes.pl
 # Create a table of chromosome lengths from a multifasta file
 #
-# Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00
+# Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00b
+# print to STDOUT to allow pipe
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -32,21 +33,22 @@ defined($opt_h) && die $usage . "\n";
 my $inpath = dirname($infile);
 my @sufx = ( ".fa", ".fasta", ".fsa" );
 my $name = basename( $infile, @sufx );
-my $outpath = $inpath."/".$name.".chrom.sizes";
+#my $outpath = $inpath."/".$name.".chrom.sizes";
 
 # create output file
-open(OUT, ">".$outpath) || die "Error: cannot create output file :$!\n";
+#open(OUT, ">".$outpath) || die "Error: cannot create output file :$!\n";
 my $seqIO = Bio::SeqIO->new(-file=>$infile, -format=>"Fasta");
 
 # loop through sequences and search motifs
 while ( my $seq = $seqIO->next_seq() ) {
 	my $title = $seq->id;
+	print STDERR "# processing $title\n";
 	my $chrlen = $seq->length;
 	# test if long enough
 	$chrlen >= $minlen || next;
-	print OUT $title."\t".$chrlen."\n";
+	print STDOUT $title."\t".$chrlen."\n";
 	}
 
 # end
-close OUT;
+#close OUT;
 exit 0;

@@ -4,7 +4,8 @@
 # Search for nicking enzyme sites in multifasta
 # report results in BED format for BedTools manipulations
 #
-# Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00
+# Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00b
+# write to STDOUT to allow pipes
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -45,10 +46,10 @@ defined($opt_h) && die $usage . "\n";
 my $inpath = dirname($infile);
 my @sufx = ( ".fa", ".fasta", ".fsa" );
 my $name = basename( $infile, @sufx );
-my $outpath = $inpath."/".$name.".bed";
+# my $outpath = $inpath."/".$name.".bed";
 
 # create output file
-open(BED, ">".$outpath) || die "Error: cannot create output file :$!\n";
+#open(BED, ">".$outpath) || die "Error: cannot create output file :$!\n";
 my $seqIO = Bio::SeqIO->new(-file=>$infile, -format=>"Fasta");
 
 # prepare query list
@@ -72,12 +73,12 @@ while ( my $seq = $seqIO->next_seq() ) {
 	my %sites = lookup($regex, $dna, $title);
 	foreach my $hit (sort {$a <=> $b} keys %sites) {
 		my $line = join("\t", $title, $sites{$hit}{result});
-		print BED $line."\n";
+		print STDOUT $line."\n";
 	}
 }
 
 # end
-close BED;
+#close BED;
 exit 0;
 
 ############ SUBS #############

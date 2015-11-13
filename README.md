@@ -25,7 +25,7 @@ The BIO-perl script [restrict2bed.pl](fasta-tools/restrict2bed.pl) will parse a 
 
 ### **fasta2chromsizes.pl**
 
-The BIO-perl script [dedupFastaSeq.pl](fasta-tools/fasta2chromsizes.pl) create a file reporting chromosome lengths from a multifasta file. Such file is required for BedTools to operate on intervals (requires BioPerl for parsing fasta).
+The BIO-perl script [fasta2chromsizes.pl](fasta-tools/fasta2chromsizes.pl) create a file reporting chromosome lengths from a multifasta file. Such file is required for BedTools to operate on intervals (requires BioPerl for parsing fasta).
 ```bash
 ## Usage: fasta2chromsizes.pl <-i fasta-file>
 # Additional optional parameters are:

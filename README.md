@@ -101,7 +101,7 @@ Usage: This script was created to extract uniquely mapped reads from a public BA
 
 The Perl **[bam_re-pair.pl](bam-tools/bam_re-pair.pl)** script gets data from a piped samtools command and filters paired reads only to create a new BAM file with help of samtools.
 
-```
+```bash
 Usage: samtools view -h <name_sorted.bam> | 
 	bam_re-pair.pl | 
 	samtools view -bSo <name_sorted.filtered.bam> -

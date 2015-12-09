@@ -19,7 +19,7 @@ my $usage="## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=incr
 # Additional optional parameters are:
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
-# <-z gzip results (default OFF)>
+# <-z zip results (default OFF)>
 # <-h to display this help>";
 
 # disable buffering to get output during long process (loop)
@@ -41,7 +41,9 @@ defined($opt_h) && die $usage."\n";
 
 # define filehandlers
 my $outpath = dirname($fastain);
-my @sufx = ( ".fa", ".fa.gz", ".fa.zip", ".fasta", ".fasta.gz", ".fasta.zip");
+my @sufx = ( ".fa", ".fa.gz", ".fa.zip", 
+	".fasta", ".fasta.gz", ".fasta.zip", 
+	".fna", ".fna.gz", ".fna.zip",);
 my $outbase = basename( $fastain, @sufx );
 my $fastaout = $outpath."/".$order."_".$outbase.".fa";
 my $fastaoutz = $outpath."/".$order."_".$outbase.".fa.gz";
@@ -137,7 +139,7 @@ exit 0;
 sub OpenArchiveFile {
     my $infile = shift;
     my $FH;
-    if ($infile =~ /.fa$|.fasta$/) {
+    if ($infile =~ /.fa$|.fasta$|.fna$/) {
     $FH = Bio::SeqIO -> new(-file => "$infile", -format => 'Fasta');
     }
     elsif ($infile =~ /.bz2$/) {

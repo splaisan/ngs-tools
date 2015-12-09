@@ -83,23 +83,25 @@ print STDERR "# too long: ".$longer." sequences\n";
 print STDERR "# kept: ".$kept." sequences\n";
 print STDERR "# kept length: ".$keptlen." bps\n";
 
+# cleanup
+close $seq;
 exit 0;
 
 #### Subs ####
 sub OpenArchiveFile {
     my $infile = shift;
     my $FH;
-    if ($infile =~ /.fa$|.fasta$/) {
+    if ($infile =~ /.fa$|.fasta$|.fna$/) {
     $FH = Bio::SeqIO -> new(-file => "$infile", -format => 'Fasta');
     }
     elsif ($infile =~ /.bz2$/) {
-    $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile |", -format => 'Fasta');
+    $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile| ", -format => 'Fasta');
     }
     elsif ($infile =~ /.gz$/) {
-    $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile |", -format => 'Fasta');
+    $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile| ", -format => 'Fasta');
     }
     elsif ($infile =~ /.zip$/) {
-    $FH = Bio::SeqIO -> new(-file => "unzip -p $infile |", -format => 'Fasta');
+    $FH = Bio::SeqIO -> new(-file => "unzip -p $infile| ", -format => 'Fasta');
     } else {
 	die ("$!: do not recognise file type $infile");
 	# if this happens add, the file type with correct opening proc

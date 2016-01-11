@@ -27,7 +27,6 @@ while ( my $seq = <SEQS> ) {
 	$revcmp =~ tr[ACGTacgt][tgca];
 	# output
 	print STDOUT "seq:".$seq.", rev:".$rev.", rev-compl :".uc($revcmp)."\n";
-
 }
 
 close SEQS;

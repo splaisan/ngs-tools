@@ -22,9 +22,6 @@ while ( my $seq = <SEQS> ) {
 	my @seq = split(/\b/, $seq);
 	# reverse sequence
 	my $rev = reverse($seq);
-	#while (@seq) {
-    #	$rev .= pop(@seq);
-	#	}
 	# reverse complement
 	my $revcmp = $rev; 
 	$revcmp =~ tr[ACGTacgt][tgca];

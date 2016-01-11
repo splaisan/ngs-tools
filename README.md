@@ -53,7 +53,7 @@ The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will fi
 
 ### **rev_revcomp.pl**
 
-This simple Perl script gets a list of sequences (primers) and returns the reverse and reverse+complement sequences.
+The simple Perl script [rev_revcomp.pl](fasta-tools/rev_revcomp.pl) gets a list of sequences (primers) and returns the reverse and reverse+complement sequences.
 ```bash
 ## usage: rev_revcomp.pl <file=list of sequences>
 ```

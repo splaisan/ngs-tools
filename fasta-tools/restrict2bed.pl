@@ -10,10 +10,11 @@
 # visit our Git: https://github.com/BITS-VIB
 
 # examples: NEB Nickers for Bionanogenomics
-# 	'Nt-BspQI' => 'GCTCTTC',
-# 	'Nt-BbvCI' => 'CCTCAGC',
-# 	'Nb-BsMI'  => 'GAATGC',
+# 	'Nt-BspQI' => 'GCTCTTC'
+# 	'Nt-BbvCI' => 'CCTCAGC'
+# 	'Nb-BsMI'  => 'GAATGC'
 # 	'Nb-BsrDI' => 'GCAATG'
+# 	'Nb-BssSI' => 'CACGAG'
 
 use warnings;
 use strict;
@@ -28,11 +29,12 @@ getopts('i:n:l:h');
 our ( $opt_i, $opt_n, $opt_l, $opt_h );
 
 my $usage = "## Usage: restrict2bed.pl <-i fasta-file>
-# <-n 'nicker(s)', multiple allowed separated by ',')>
-#  'Nt-BspQI' => 'GCTCTTC',
-#  'Nt-BbvCI' => 'CCTCAGC',
-#  'Nb-BsMI'  => 'GAATGC',
+# <-n 'nicker(s) consensus', multiple allowed separated by ',')>
+#  'Nt-BspQI' => 'GCTCTTC'
+#  'Nt-BbvCI' => 'CCTCAGC'
+#  'Nb-BsMI'  => 'GAATGC'
 #  'Nb-BsrDI' => 'GCAATG'
+#  'Nb-BssSI' => 'CACGAG'
 # Additional optional parameters are:
 # <-l minimal length for dna sequence (20000)>
 # <-h to display this help>";

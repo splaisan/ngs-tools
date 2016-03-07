@@ -13,11 +13,12 @@ A script using R packages to query biomaRt and fetch genes in a given locus (loc
 The BIO-perl script [restrict2bed.pl](fasta-tools/restrict2bed.pl) will parse a multifasta file and look for one or several combined RE sites on both strands; matches are reported in BED format to be used with BedTools (requires BioPerl and several cpan modules to work, see header). Can be used to compute nicking label count per 100kb if combined to bedtools ([labeldensity.pl](https://github.com/BITS-VIB/bionano-tools/blob/master/general-tools/labeldensity.pl))
 ```bash
 ## Usage: restrict2bed.pl <-i fasta-file>
-# <-n 'nicker(s)', multiple allowed separated by ',')>
-#  'Nt-BspQI' => 'GCTCTTC',
-#  'Nt-BbvCI' => 'CCTCAGC',
-#  'Nb-BsMI'  => 'GAATGC',
+# <-n 'nicker(s) consensus', multiple allowed separated by ',')>
+#  'Nt-BspQI' => 'GCTCTTC'
+#  'Nt-BbvCI' => 'CCTCAGC'
+#  'Nb-BsMI'  => 'GAATGC'
 #  'Nb-BsrDI' => 'GCAATG'
+#  'Nb-BssSI' => 'CACGAG'
 # Additional optional parameters are:
 # <-l minimal length for dna sequence (20000)>
 # <-h to display this help>

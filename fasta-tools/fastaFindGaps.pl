@@ -5,9 +5,9 @@ use Bio::SeqIO;
 use Getopt::Std;
 use File::Tee qw(tee);
 
+# title: fastaFindgaps.pl
 # Search N-regions in multifasta (genomes)
 # and produce a BED file with found locations
-# use the knicker key file to rename contigs
 #
 # adapted from http://stackoverflow.com/questions/10319696
 #
@@ -21,10 +21,10 @@ use File::Tee qw(tee);
 # disable buffering to get output during long process (loop)
 $|=1;
 
-getopts('i:k:l:h');
-our($opt_i, $opt_k, $opt_l, $opt_h);
+getopts('i:o:l:h');
+our($opt_i, $opt_o, $opt_l, $opt_h);
 
-my $usage="## Usage: findNregions.pl <-i fasta-file> <-k key-file to rename contigs>
+my $usage="## Usage: fastaFindgaps.pl <-i fasta-file> <-o name for BED output (or adapted from input name)>
 # Additional optional parameters are:
 # <-l minsize in bps (default to 100bps)>
 # <-h to display this help>";
@@ -34,7 +34,6 @@ my $usage="## Usage: findNregions.pl <-i fasta-file> <-k key-file to rename cont
 ####################
 
 my $fastain = $opt_i || die $usage."\n";
-my $keyfile = $opt_k || die $usage."\n";
 my $minlen = $opt_l || 100;
 defined($opt_h) && die $usage."\n";
 
@@ -47,26 +46,14 @@ our $presentlen = 0;
 our $absentlen = 0;
 our $nlength = 0;
 
-# load key-file data into hash
-our %keyhash = ();
-open KEYS, $keyfile or die $!;
-while (<KEYS>) {
-	chomp;
-	next if ! ($_ =~ /^[0-9]/); # ignore header lines
-	my ($CompntId, $CompntName, $CompntLength) = split "\t";
-	$CompntName =~ s/\s+$//; # remove trailing spaces here too
-	$keyhash{$CompntName} = $CompntId;
-	#debug print STDOUT "'", $CompntName, "' -> ", $CompntId, "\n";
-}
-close KEYS;
-
 # open stream from BED file
 my $outpath = dirname($fastain);
 my $basename = basename($fastain);
 (my $outbase = $basename) =~ s/\.[^.]+$//;
 
+my $outfile = defined($opt_o) ? ($outpath."/".$opt_o) : ($outpath."/".$outbase."-".$minlen."_Gaps.bed");
+
 # include size limit and max intensity in file names
-my $outfile = $outpath."/".$outbase."-".$minlen."bps_N-regions.bed";
 open OUT, "> $outfile" || die $!;
 
 # keep log copy of STDOUT (comment out if you do not have 'File::Tee' installed
@@ -97,35 +84,27 @@ while( my $seq_obj = $parser->next_seq() ) {
 	# count
 	$total ++;
 	$totallen += $len;
+	$present += 1;
+	$presentlen += $len;
+	print STDOUT "## Searching sequence $seqid for $motif\n";
+	my $sequence = $seq_obj->seq();
 
-	# check if cmap has this fasta record
-	if ( defined $keyhash{$seqheader} ) {
-		$present += 1;
-		$presentlen += $len;
-		print STDOUT "## Searching sequence $seqid for $motif\n";
-		my $sequence = $seq_obj->seq();
-
-		# scan for motif and report hits
-		while ( $sequence =~ m/$motif/gi ) {
-			$counter++;
-			my $match_start = $-[0]+1; # BED is zero-based !
-			my $match_end = $+[0];
-			my $match_seq = $&;
-			$nlength += length($&);
-			# print in BED5 format when present in cmap
-			print OUT join("\t", $keyhash{$seqheader}, $match_start,
-				$match_end, "N-region", length($&), "+")."\n";
-			}
-
-		# end for this sequence
-		print STDOUT "# found $counter matches for $seqid\n";
-		$totcnt += $counter;
-		} else {
-		 	print STDOUT "# $seqid is absent from the cmap\n";
-			$absent += 1;
-			$absentlen += $len;
+	# scan for motif and report hits
+	while ( $sequence =~ m/$motif/gi ) {
+		$counter++;
+		my $match_start = $-[0]+1; # BED is zero-based !
+		my $match_end = $+[0];
+		my $match_seq = $&;
+		$nlength += length($&);
+		# print in BED5 format when present in cmap
+		print OUT join("\t", $seqid, $match_start,
+			$match_end, "N-region", length($&), "+")."\n";
 		}
-	}
+
+	# end for this sequence
+	print STDOUT "# found $counter matches for $seqid\n";
+	$totcnt += $counter;
+}
 
 # close filehandle
 close OUT;

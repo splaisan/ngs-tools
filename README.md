@@ -41,6 +41,18 @@ The BIO-perl script [dedupFastaSeq.pl](fasta-tools/dedupFastaSeq.pl) will parse 
 ## Usage: dedupFastaSeq.pl <fasta_input file> <output file name>
 ```
 
+### **fastaFindGaps.pl**
+
+The BIO-perl script [fastaFindGaps.pl](fasta-tools/fastaFindGaps.pl) will parse a multifasta file and look for stretches of N's of at least 'l-length' and report the found hits in BED5 format. Gaps are good to compare to coverage results in IGV or subtract from captured or selected regions using Bedtools.
+
+```bash
+## Usage: fastaFindGaps.pl <-i fasta-file> 
+# Additional optional parameters are:
+# <-o BED output (optional, deduced from input file)>
+# <-l minsize in bps (default to 100bps)>
+# <-h to display this help>
+```
+
 ### **fastaFiltLength.pl**
 
 The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will filter a multifasta file and keep only sequence with length > min and <max values. Was created to filter genome assemblies containing multiple small files.

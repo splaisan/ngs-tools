@@ -53,11 +53,10 @@ my $basename = basename($fastain);
 (my $outbase = $basename) =~ s/\.[^.]+$//;
 
 my $outfile;
-
 if ( defined($opt_o) ) {
 	$outfile = $outpath."/".$opt_o;
 } else {
-	$outfile = $outpath."/".$outbase."-".$minlen."_Gaps.bed"
+	$outfile = $outpath."/".$outbase."-".$minlen."_Gaps.bed";
 }
 
 # include size limit and max intensity in file names

@@ -36,7 +36,7 @@ The BIO-perl script [fasta2chromsizes.pl](fasta-tools/fasta2chromsizes.pl) creat
 
 ### **findNregions.pl**
 
-The perl tool **[findNregions.pl](general-tools/findNregions.pl)** find regions of N's from a reference multi-fasta file and the corresponding knicker key table. It stores the coordinate of all hits to BED for loading in IrysView as track with sequence titles renamed using the key file. Such track may prove useful to identify issues associated with sequence gaps of incorrect size introduced in assemblies.
+The perl tool **[findNregions.pl](fasta-tools/findNregions.pl)** find regions of N's from a reference multi-fasta file and the corresponding knicker key table. It stores the coordinate of all hits to BED for loading in IrysView as track with sequence titles renamed using the key file. Such track may prove useful to identify issues associated with sequence gaps of incorrect size introduced in assemblies.
 
 ```bash
 ## Usage: findNregions.pl <-i fasta-file> <-k key-file to rename contigs>

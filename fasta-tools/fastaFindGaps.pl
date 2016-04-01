@@ -5,9 +5,9 @@ use Bio::SeqIO;
 use Getopt::Std;
 use File::Tee qw(tee);
 
-# title: fastaFindgaps.pl
+# title: fastaFindGaps.pl
 # Search N-regions in multifasta (genomes)
-# and produce a BED file with found locations
+# and produce a BED file with found GAP locations
 #
 # adapted from http://stackoverflow.com/questions/10319696
 #
@@ -24,8 +24,9 @@ $|=1;
 getopts('i:o:l:h');
 our($opt_i, $opt_o, $opt_l, $opt_h);
 
-my $usage="## Usage: fastaFindgaps.pl <-i fasta-file> <-o name for BED output (or adapted from input name)>
+my $usage="## Usage: fastaFindGaps.pl <-i fasta-file> 
 # Additional optional parameters are:
+# <-o BED output (optional, deduced from input file)>
 # <-l minsize in bps (default to 100bps)>
 # <-h to display this help>";
 
@@ -51,7 +52,13 @@ my $outpath = dirname($fastain);
 my $basename = basename($fastain);
 (my $outbase = $basename) =~ s/\.[^.]+$//;
 
-my $outfile = defined($opt_o) ? ($outpath."/".$opt_o) : ($outpath."/".$outbase."-".$minlen."_Gaps.bed");
+my $outfile;
+
+if ( defined($opt_o) ) {
+	$outfile = $outpath."/".$opt_o;
+} else {
+	$outfile = $outpath."/".$outbase."-".$minlen."_Gaps.bed"
+}
 
 # include size limit and max intensity in file names
 open OUT, "> $outfile" || die $!;
@@ -119,11 +126,6 @@ $absentlen =~ s/\d{1,3}(?=(\d{3})+(?!\d))/$&,/g;
 $nlength =~ s/\d{1,3}(?=(\d{3})+(?!\d))/$&,/g;
 
 print STDOUT "\n############################ summary #####################################\n";
-print STDOUT "# $total fasta entries from the original file were parsed\n";
-print STDOUT "# for a total of $totallen bps\n";
-print STDOUT "# $absent entries from the original fasta file are absent in the cmap\n";
-print STDOUT "# for a total of $absentlen bps\n";
-print STDOUT "# => $percentpresent of the fasta file is represented in the cmap\n";
 print STDOUT "# $present fasta entries ($presentlen bps)\n";
 print STDOUT "# reported a total of $totcnt N-regions of $minlen bps or more\n";
 print STDOUT "# for a total N-length of $nlength bps ($percentn of represented sequences)\n";

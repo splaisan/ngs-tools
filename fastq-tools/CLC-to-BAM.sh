@@ -64,7 +64,7 @@ java -jar $PICARD/picard.jar FastqToSam \
 if [ $? = 0 ]; then
 	rm left_unmapped.fq.gz right_unmapped.fq.gz
 else
-	echo "# conversion failed for unmapped paired reads"
+	echo "# conversion failed for unmapped paired reads!"
 	exit 1
 fi
 
@@ -74,7 +74,7 @@ java -jar $PICARD/picard.jar FastqToSam \
 	F1=${single} \
 	SM="single" \
 	O=unmapped_single.sam || \
-	(echo "# conversion failed for unmapped single reads"; exit 1)
+	(echo "# conversion failed for unmapped single reads!"; exit 1)
 
 echo
 echo "# merging mapped data with unmapped reads into one BAM file"
@@ -89,7 +89,7 @@ samtools merge -f -h ${mapped} \
 if [ $? = 0 ]; then
 	rm unmapped_paired.sam unmapped_single.sam
 else
-	echo "# conversion failed for unmapped paired reads"
+	echo "# merging sam files failed!"
 	exit 1
 fi
 

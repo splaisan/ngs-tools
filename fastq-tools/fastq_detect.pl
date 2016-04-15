@@ -131,4 +131,8 @@ sub ReadFile {
 		die ("$!: do not recognise file type $infile");
 	}
 	return $FH;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

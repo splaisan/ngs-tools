@@ -1,11 +1,13 @@
 #!/usr/bin/perl -w
 
 # restrict2bed.pl
-# Search for nicking enzyme sites in multifasta
+# Search for nicking enzyme sites in multifasta reference genomes
 # report results in BED format for BedTools manipulations
 #
 # Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00b
-# write to STDOUT to allow pipes
+#
+# write to STDOUT to allow pipes; v1.00b 
+# added case insensitivity 2016-04-19; v1.01
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -22,6 +24,8 @@ use Bio::SeqIO;
 use File::Basename;
 use Getopt::Std;
 
+my $version="v1.01; # 2016-04-19
+
 ############################
 # handle command parameters
 ############################
@@ -30,11 +34,11 @@ our ( $opt_i, $opt_n, $opt_l, $opt_h );
 
 my $usage = "## Usage: restrict2bed.pl <-i fasta-file>
 # <-n 'nicker(s) consensus', multiple allowed separated by ',')>
-#  'Nt-BspQI' => 'GCTCTTC'
-#  'Nt-BbvCI' => 'CCTCAGC'
-#  'Nb-BsMI'  => 'GAATGC'
-#  'Nb-BsrDI' => 'GCAATG'
-#  'Nb-BssSI' => 'CACGAG'
+#  eg. 'Nt-BspQI' => 'GCTCTTC'
+#  eg. 'Nt-BbvCI' => 'CCTCAGC'
+#  eg. 'Nb-BsMI'  => 'GAATGC'
+#  eg. 'Nb-BsrDI' => 'GCAATG'
+#  eg. 'Nb-BssSI' => 'CACGAG'
 # Additional optional parameters are:
 # <-l minimal length for dna sequence (20000)>
 # <-h to display this help>";
@@ -46,7 +50,7 @@ defined($opt_h) && die $usage . "\n";
 
 # handle IO
 my $inpath = dirname($infile);
-my @sufx = ( ".fa", ".fasta", ".fsa" );
+my @sufx = ( ".fa", ".fasta", ".fsa", ".fna" );
 my $name = basename( $infile, @sufx );
 # my $outpath = $inpath."/".$name.".bed";
 
@@ -54,7 +58,7 @@ my $name = basename( $infile, @sufx );
 #open(BED, ">".$outpath) || die "Error: cannot create output file :$!\n";
 my $seqIO = Bio::SeqIO->new(-file=>$infile, -format=>"Fasta");
 
-# prepare query list
+# prepare query list from multiple sequence motifs
 my @plus = split(",", $nicker);
 my @min = map {revdnacomp($_)} @plus;
 # combine both and remove duplicates (palindromes)
@@ -103,7 +107,7 @@ sub uniq {
 sub lookup {
 	my ($regex, $seq, $title) = @_;
 	my %hits=();
-	while ($seq =~ /($regex)/g) {
+	while ($seq =~ /($regex)/ig) {
 		$hits{$-[0]}{result} = "$-[0]\t".($+[0]-1)."\t$1\t1\t+";
 		}
 	return %hits;

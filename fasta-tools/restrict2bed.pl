@@ -2,7 +2,7 @@
 
 # restrict2bed.pl
 # Search for nicking enzyme sites in multifasta reference genomes
-# report results in BED format for BedTools manipulations
+# report results in BED format to STDOUT for BedTools piping & manipulations
 #
 # Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00b
 #

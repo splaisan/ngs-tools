@@ -24,7 +24,7 @@ use Bio::SeqIO;
 use File::Basename;
 use Getopt::Std;
 
-my $version="v1.01; # 2016-04-19
+my $version="v1.01"; # 2016-04-19
 
 ############################
 # handle command parameters
@@ -59,7 +59,7 @@ my $name = basename( $infile, @sufx );
 my $seqIO = Bio::SeqIO->new(-file=>$infile, -format=>"Fasta");
 
 # prepare query list from multiple sequence motifs
-my @plus = split(",", $nicker);
+my @plus = split(",", uc($nicker)); # take uppercase
 my @min = map {revdnacomp($_)} @plus;
 # combine both and remove duplicates (palindromes)
 my @query = uniq(@plus,@min);

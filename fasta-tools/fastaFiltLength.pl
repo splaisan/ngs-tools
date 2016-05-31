@@ -84,7 +84,7 @@ print STDERR "# kept: ".$kept." sequences\n";
 print STDERR "# kept length: ".$keptlen." bps\n";
 
 # cleanup
-close $seq;
+undef $seq_in;
 exit 0;
 
 #### Subs ####

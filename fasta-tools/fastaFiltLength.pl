@@ -7,7 +7,9 @@
 # 2015/06/21; v1.1
 # supports compressed files (zip, gzip, bgzip)
 # 2015/09/29; v1.2
-# add total and filtered lenths
+# add total and filtered lengths
+# 2016/05/31; v1.21
+# add bgzipped output
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -15,24 +17,28 @@ use warnings;
 use strict;
 use Bio::SeqIO;
 use Getopt::Std;
+use File::Which;
 
 my $usage="## Usage: fastaFiltLength.pl <-i fasta_file (required)>
 # Additional optional parameters are:
 # <-o outfile_name (filtered_)>
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
+# <-z zip results (default OFF)>
 # <-h to display this help>";
 
 ####################
 # declare variables
 ####################
-getopts('i:o:m:x:h');
-our ($opt_i, $opt_o, $opt_m, $opt_x, $opt_h);
+getopts('i:o:m:x:zh');
+our ($opt_i, $opt_o, $opt_m, $opt_x, $opt_z, $opt_h);
 
 my $infile = $opt_i || die $usage."\n";
 my $outfile = $opt_o || "filtered_".$infile;
 my $minlen = $opt_m || undef;
 my $maxlen = $opt_x || undef;
+my $zipit = defined($opt_z) || undef;
+
 defined($opt_h) && die $usage."\n";
 
 # right limits
@@ -43,8 +49,23 @@ if ( defined $minlen && defined $maxlen && $maxlen < $minlen) {
 
 # filehandles
 my $seq_in = OpenArchiveFile($infile);
-my $seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
+my $seq_out;
 
+if ( defined($zipit) ) {
+    open OUT, " | gzip -c > " . $outfile . ".gz" || die $!;
+} else {
+    open OUT, "> $outfile" || die $!;
+}
+
+if ( defined($zipit) ) {
+	my $bgzip = `which bgzip`;
+	die "No bgzip command available\n" unless ( $bgzip );
+	chomp($bgzip);
+	$seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => "|$bgzip -c >$outfile\.gz");
+	} else {
+	$seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
+}
+	
 # counters
 my $count = 0;
 my $totlen = 0;
@@ -72,7 +93,8 @@ while( my $seq = $seq_in -> next_seq() ) {
 	# otherwise print out
 	$kept++;
 	$keptlen += $lseq;
-	$seq_out -> write_seq($seq);
+	$seq_out->write_seq($seq);
+	#print $seq_out $seq;
 }
 
 # print counts to stderr
@@ -104,7 +126,7 @@ sub OpenArchiveFile {
     $FH = Bio::SeqIO -> new(-file => "unzip -p $infile| ", -format => 'Fasta');
     } else {
 	die ("$!: do not recognise file type $infile");
-	# if this happens add, the file type with correct opening proc
+	# if this happens, add the file type with correct opening proc
     }
     return $FH;
 }

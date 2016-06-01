@@ -58,10 +58,12 @@ The BIO-perl script [fastaFindGaps.pl](fasta-tools/fastaFindGaps.pl) will parse 
 The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will filter a multifasta file and keep only sequence with length > min and <max values. Was created to filter genome assemblies containing multiple small files.
 ```bash
 ## Usage: fastaFiltLength.pl <-i fasta_file (required)>
+# script version:2.0
 # Additional optional parameters are:
 # <-o outfile_name (filtered_)>
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
+# <-z zip results (default OFF)>
 # <-h to display this help>
 ```
 
@@ -76,10 +78,13 @@ The simple Perl script [rev_revcomp.pl](fasta-tools/rev_revcomp.pl) gets a list 
 
 The BIO-perl script [fastaSortLength.pl](fasta-tools/fastaSortLength.pl) will sorts a multifasta file by decreasing or increasing order. It also allows filtering by size and exclude sequences that woulsd be too small or too large. Was created to clean input fasta files before applying Knicker (BionanoGenomics).
 ```bash
-## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=increasing | 'd'=decreasing)>
+## Usage: fastaSortlength.pl <-i fasta-file> 
+# <-o size-order ('i'=increasing | 'd'=decreasing)>
+# script version:2.0
 # Additional optional parameters are:
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
+# <-z zip results (default OFF)>
 # <-h to display this help>
 ```
 

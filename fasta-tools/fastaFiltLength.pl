@@ -112,7 +112,6 @@ while( my $seq = $in -> next_seq() ) {
 	$kept++;
 	$keptlen += $lseq;
 	$out->write_seq($seq);
-	#print $out $seq;
 }
 
 # print counts to stderr

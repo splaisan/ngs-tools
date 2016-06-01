@@ -7,6 +7,9 @@
 # Stephane Plaisance (VIB-NC+BITS) 2015/06/21; v1.0
 # add min and max and zipping; v1.1
 #
+# Stephane Plaisance (VIB-NC+BITS) 2016/06/01; v2.0
+# fixed errors
+#
 # visit our Git: https://github.com/BITS-VIB
 
 use strict;
@@ -14,8 +17,14 @@ use File::Basename;
 use Bio::SeqIO;
 use Getopt::Std;
 use File::Tee qw(tee);
+use POSIX qw(strftime);
 
-my $usage="## Usage: fastaSortlength.pl <-i fasta-file> <-o size-order ('i'=increasing | 'd'=decreasing)>
+my $version = "2.0";
+my $date = strftime "%m/%d/%Y", localtime;
+
+my $usage="## Usage: fastaSortlength.pl <-i fasta-file> 
+# <-o size-order ('i'=increasing | 'd'=decreasing)>
+# script version:".$version."
 # Additional optional parameters are:
 # <-m minsize (undef)>
 # <-x maxsize (undef)>
@@ -41,9 +50,13 @@ defined($opt_h) && die $usage."\n";
 
 # define filehandlers
 my $outpath = dirname($infile);
-my @sufx = ( ".fa", ".fa.gz", ".fa.zip", 
-	".fasta", ".fasta.gz", ".fasta.zip", 
-	".fna", ".fna.gz", ".fna.zip",);
+my @sufx = (
+	"(fa|fna|fasta)", 
+	"(fa|fna|fasta).gz", 
+	"(fa|fna|fasta).gzip", 
+	"(fa|fna|fasta).bz2", 
+	"(fa|fna|fasta).zip"
+	);
 my $outbase = basename( $infile, @sufx );
 my $outfile = $outpath."/".$order."_".$outbase.".fa";
 
@@ -74,6 +87,7 @@ our @AoH = ();
 our @sorted = ();
 
 # load full fasta into array
+print STDERR "# Fasta sorting & filtering (fastaSortLength.pl v".$version."), ".$date."\n";
 print STDERR "# loading sequences in RAM\n";
 
 while( my $seq_obj = $in->next_seq() ) {
@@ -110,7 +124,6 @@ my $keptmb = $kept_width/1000000;
 my $keptpc = 100*$keptmb/$totmb;
 
 # counts
-print STDERR "# Processing results\n";
 print STDERR "# processed: ".$count." sequences\n";
 print STDERR "# tot-width: ".sprintf("%.3f",$totmb)." Mb\n";
 print STDERR "# kept: ".$kept." sequences\n";

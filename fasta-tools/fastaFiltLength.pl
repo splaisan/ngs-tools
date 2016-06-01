@@ -8,8 +8,9 @@
 # supports compressed files (zip, gzip, bgzip)
 # 2015/09/29; v1.2
 # add total and filtered lengths
-# 2016/05/31; v1.21
-# add bgzipped output
+#
+# 2016/06/01; v2.0
+# add bgzipped output and corrected errors
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -17,9 +18,15 @@ use warnings;
 use strict;
 use Bio::SeqIO;
 use Getopt::Std;
+use File::Basename;
 use File::Which;
+use POSIX qw(strftime);
+
+my $version = "2.0";
+my $date = strftime "%m/%d/%Y", localtime;
 
 my $usage="## Usage: fastaFiltLength.pl <-i fasta_file (required)>
+# script version:".$version."
 # Additional optional parameters are:
 # <-o outfile_name (filtered_)>
 # <-m minsize (undef)>
@@ -34,11 +41,11 @@ getopts('i:o:m:x:zh');
 our ($opt_i, $opt_o, $opt_m, $opt_x, $opt_z, $opt_h);
 
 my $infile = $opt_i || die $usage."\n";
-my $outfile = $opt_o || "filtered_".$infile;
+my $outname = $opt_o || undef;
+my $outfile;
 my $minlen = $opt_m || undef;
 my $maxlen = $opt_x || undef;
 my $zipit = defined($opt_z) || undef;
-
 defined($opt_h) && die $usage."\n";
 
 # right limits
@@ -47,23 +54,34 @@ if ( defined $minlen && defined $maxlen && $maxlen < $minlen) {
 	exit();
 }
 
-# filehandles
-my $seq_in = OpenArchiveFile($infile);
-my $seq_out;
+# bioperl filehandles
+my $in = OpenArchiveFile($infile);
+my $out;
 
-if ( defined($zipit) ) {
-    open OUT, " | gzip -c > " . $outfile . ".gz" || die $!;
+# remove possible suffixes from filename
+my @sufx = ( ".(fa|fna|fasta)", "(fa|fna|fasta).gz", "(fa|fna|fasta).gzip", "(fa|fna|fasta).bz2", "(fa|fna|fasta).zip" );
+my $outpath = dirname($infile);
+my $outbase = basename($infile, @sufx);
+
+# include size limits in file names
+if ( defined($outname)) {
+	$outfile = $outpath."/".$outname;
 } else {
-    open OUT, "> $outfile" || die $!;
+	$outfile = $outpath."/filtered"
+		."_gt".(int($minlen/1000))
+		.(defined($maxlen) ? "_lt".(int($maxlen/1000)) : "")
+		."-".$outbase;
 }
 
 if ( defined($zipit) ) {
 	my $bgzip = `which bgzip`;
 	die "No bgzip command available\n" unless ( $bgzip );
 	chomp($bgzip);
-	$seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => "|$bgzip -c >$outfile\.gz");
-	} else {
-	$seq_out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
+	my $fh;
+	open $fh,  " | $bgzip -c >  $outfile\.gz" || die $!;
+	$out = Bio::SeqIO->new( -format => 'Fasta', -fh => $fh);
+} else {
+	$out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
 }
 	
 # counters
@@ -74,7 +92,7 @@ my $keptlen = 0;
 my $shorter = 0;
 my $longer = 0;
 
-while( my $seq = $seq_in -> next_seq() ) {
+while( my $seq = $in -> next_seq() ) {
 	$count++;
 	my $lseq = $seq->length;
 	$totlen += $lseq;
@@ -85,7 +103,7 @@ while( my $seq = $seq_in -> next_seq() ) {
 		next;
 		}
 
-	if (defined $maxlen && $lseq > $minlen){
+	if (defined $maxlen && $lseq > $maxlen){
 		$longer++;
 		next;
 		}
@@ -93,11 +111,12 @@ while( my $seq = $seq_in -> next_seq() ) {
 	# otherwise print out
 	$kept++;
 	$keptlen += $lseq;
-	$seq_out->write_seq($seq);
-	#print $seq_out $seq;
+	$out->write_seq($seq);
+	#print $out $seq;
 }
 
 # print counts to stderr
+print STDERR "# Fasta length filtering (fastaFiltLength.pl v".$version."), ".$date."\n";
 print STDERR "# processed: ".$count." sequences\n";
 print STDERR "# total length: ".$totlen." bps\n";
 print STDERR "# too short: ".$shorter." sequences\n";
@@ -106,7 +125,8 @@ print STDERR "# kept: ".$kept." sequences\n";
 print STDERR "# kept length: ".$keptlen." bps\n";
 
 # cleanup
-undef $seq_in;
+undef $in;
+undef $out;
 exit 0;
 
 #### Subs ####
@@ -116,11 +136,11 @@ sub OpenArchiveFile {
     if ($infile =~ /.fa$|.fasta$|.fna$/) {
     $FH = Bio::SeqIO -> new(-file => "$infile", -format => 'Fasta');
     }
-    elsif ($infile =~ /.bz2$/) {
-    $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile| ", -format => 'Fasta');
-    }
     elsif ($infile =~ /.gz$/) {
-    $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile| ", -format => 'Fasta');
+    $FH = Bio::SeqIO -> new(-file => "bgzip -cd $infile| ", -format => 'Fasta');
+    }
+    elsif ($infile =~ /.bz2$/) {
+    $FH = Bio::SeqIO -> new(-file => "bzip2 -c $infile| ", -format => 'Fasta');
     }
     elsif ($infile =~ /.zip$/) {
     $FH = Bio::SeqIO -> new(-file => "unzip -p $infile| ", -format => 'Fasta');

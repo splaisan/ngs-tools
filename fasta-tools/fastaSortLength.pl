@@ -31,7 +31,7 @@ $|=1;
 getopts('i:o:m:x:zh');
 our($opt_i, $opt_o, $opt_m, $opt_x, $opt_z, $opt_h);
 
-my $fastain = $opt_i || die $usage."\n";
+my $infile = $opt_i || die $usage."\n";
 my $order = $opt_o || die $usage."\n";
 $order =~ /^(i|d)$/ || die "# order should be 'i'=increasing | 'd'=decreasing !";
 my $minlen = $opt_m || undef;
@@ -40,24 +40,28 @@ my $zipit = defined($opt_z) || undef;
 defined($opt_h) && die $usage."\n";
 
 # define filehandlers
-my $outpath = dirname($fastain);
+my $outpath = dirname($infile);
 my @sufx = ( ".fa", ".fa.gz", ".fa.zip", 
 	".fasta", ".fasta.gz", ".fasta.zip", 
 	".fna", ".fna.gz", ".fna.zip",);
-my $outbase = basename( $fastain, @sufx );
-my $fastaout = $outpath."/".$order."_".$outbase.".fa";
-my $fastaoutz = $outpath."/".$order."_".$outbase.".fa.gz";
+my $outbase = basename( $infile, @sufx );
+my $outfile = $outpath."/".$order."_".$outbase.".fa";
 
-# bioperl handler
-my $in = OpenArchiveFile($fastain);
+# bioperl filehandles
+my $in = OpenArchiveFile($infile);
+my $out;
 
 # add zipping option
-my $out;
 if ( defined($zipit) ) {
-		$out = Bio::SeqIO -> new(-file => " | gzip -c > $fastaoutz", -format => 'Fasta');
-	} else {
-		$out = Bio::SeqIO -> new(-file => "> $fastaout", -format => 'Fasta');
-	}
+	my $bgzip = `which bgzip`;
+	die "No bgzip command available\n" unless ( $bgzip );
+	chomp($bgzip);
+	my $fh;
+	open $fh,  " | $bgzip -c >  $outfile\.gz" || die $!;
+	$out = Bio::SeqIO->new( -format => 'Fasta', -fh => $fh);
+} else {
+	$out = Bio::SeqIO -> new( -format => 'Fasta', -file => ">$outfile" );
+}
 
 # variables
 our $count = 0;
@@ -143,10 +147,10 @@ sub OpenArchiveFile {
     $FH = Bio::SeqIO -> new(-file => "$infile", -format => 'Fasta');
     }
     elsif ($infile =~ /.bz2$/) {
-    $FH = Bio::SeqIO -> new(-file => "bgzip -c $infile |", -format => 'Fasta');
+    $FH = Bio::SeqIO -> new(-file => "bzip2 -c $infile |", -format => 'Fasta');
     }
     elsif ($infile =~ /.gz$/) {
-    $FH = Bio::SeqIO -> new(-file => "gzip -cd $infile |", -format => 'Fasta');
+    $FH = Bio::SeqIO -> new(-file => "bgzip -cd $infile |", -format => 'Fasta');
     }
     elsif ($infile =~ /.zip$/) {
     $FH = Bio::SeqIO -> new(-file => "unzip -p $infile |", -format => 'Fasta');

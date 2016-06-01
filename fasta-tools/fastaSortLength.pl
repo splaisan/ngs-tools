@@ -51,11 +51,10 @@ defined($opt_h) && die $usage."\n";
 # define filehandlers
 my $outpath = dirname($infile);
 my @sufx = (
-	"(fa|fna|fasta)", 
-	"(fa|fna|fasta).gz", 
-	"(fa|fna|fasta).gzip", 
-	"(fa|fna|fasta).bz2", 
-	"(fa|fna|fasta).zip"
+	".fa", ".fasta", ".fsa", ".fna",
+	".fa.gz", ".fasta.gz", ".fsa.gz", ".fna.gz",
+	".fa.zip", ".fasta.zip", ".fsa.zip", ".fna.zip",
+	".fa.bz2", ".fasta.bz2", ".fsa.bz2", ".fna.bz2", 
 	);
 my $outbase = basename( $infile, @sufx );
 my $outfile = $outpath."/".$order."_".$outbase.".fa";

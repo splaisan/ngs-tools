@@ -59,7 +59,12 @@ my $in = OpenArchiveFile($infile);
 my $out;
 
 # remove possible suffixes from filename
-my @sufx = ( ".(fa|fna|fasta)", "(fa|fna|fasta).gz", "(fa|fna|fasta).gzip", "(fa|fna|fasta).bz2", "(fa|fna|fasta).zip" );
+my @sufx = (
+	".fa", ".fasta", ".fsa", ".fna",
+	".fa.gz", ".fasta.gz", ".fsa.gz", ".fna.gz",
+	".fa.zip", ".fasta.zip", ".fsa.zip", ".fna.zip",
+	".fa.bz2", ".fasta.bz2", ".fsa.bz2", ".fna.bz2", 
+	);
 my $outpath = dirname($infile);
 my $outbase = basename($infile, @sufx);
 
@@ -70,7 +75,7 @@ if ( defined($outname)) {
 	$outfile = $outpath."/filtered"
 		."_gt".(int($minlen/1000))
 		.(defined($maxlen) ? "_lt".(int($maxlen/1000)) : "")
-		."-".$outbase;
+		."-".$outbase.".fa";
 }
 
 if ( defined($zipit) ) {

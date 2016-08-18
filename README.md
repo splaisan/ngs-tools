@@ -6,14 +6,18 @@
 **[Analysis tools](#analysis-tools)**  
 **[Formatting tools for FASTA data](#formatting-tools-for-fasta-data)**  
 **[Formatting tools for FASTQ data](#formatting-tools-for-fastq-data)**  
+Formatting tools for SAM / BAM data
+Formatting tool for annotation data
 
 # Analysis tools
+*[TOP](#top)* 
 
 ## **locus2genes**
 
 A script using R packages to query biomaRt and fetch genes in a given locus (loci) before computing GO enrichment on the gene list. Please read the [dedicated page](locus2genes/README.md) for more info.
 
 # Formatting tools for FASTA data
+*[TOP](#top)* 
 
 ## **restrict2bed.pl**
 
@@ -96,6 +100,7 @@ The BIO-perl script [fastaSortLength.pl](fasta-tools/fastaSortLength.pl) will so
 ```
 
 # Formatting tools for FASTQ data
+*[TOP](#top)* 
 
 ## **fastq_detect.pl**
 
@@ -123,6 +128,7 @@ The awk script **[isFastqUniq.sh](fastq-tools/isFastqUniq.sh)** is parsing fastQ
 The perl script **[deduplicateFastq.pl](fastq-tools/deduplicateFastq.pl)** is parsing two paired fastQfiles (can be flat or .gz) and filters out reads found more than once based on their exact names. This script was developped for data extracted from BAM that presented the same reads multiple times due to alternate mapping results. The script will end if pair sync is not valid (same name for both mates) or if fastq 4-line structure is lost.
 
 # Formatting tools for SAM / BAM data
+*[TOP](#top)* 
 
 ## **uniq_mappings.pl**
 
@@ -141,11 +147,13 @@ Usage: samtools view -h <name_sorted.bam> |
 ```
 
 # Formatting tool for annotation data
+*[TOP](#top)*
 
 ## **bed2picard-list.sh**
 
 Some Picard tools, like **CalculateHsMetrics** require list as input. The Picard list format is a hybrid format including a sam header and almost-BED data. The BED data has 5-columns and the start coordinate increased by 1 to reflect the 1-closed coordinate expectations of Picard. A simple bash script **[bed2picard-list.sh](bam-tools/bed2picard-list.sh)** was created to streamline the process of creating a list file from a **bed5** and **dict** files.
 
+*[TOP](#top)* 
 
 <h4>Please send comments and feedback to <a href="mailto:bits@vib.be">bits@vib.be</a></h4>
 

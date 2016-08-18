@@ -6,8 +6,8 @@
 **[Analysis tools](#analysis-tools)**  
 **[Formatting tools for FASTA data](#formatting-tools-for-fasta-data)**  
 **[Formatting tools for FASTQ data](#formatting-tools-for-fastq-data)**  
-**[Formatting tools for SAM / BAM data](#formatting-tools-for-sam--bam-data)**
-**[Formatting tool for annotation data](#formatting-tool-for-annotation-data)**
+**[Formatting tools for SAM / BAM data](#formatting-tools-for-sam--bam-data)**  
+**[Formatting tool for annotation data](#formatting-tool-for-annotation-data)**  
 
 # Analysis tools
 *[TOP](#top)* 

@@ -135,7 +135,7 @@ $summary .= "# kept length: ".$keptlen." bps\n";
 print STDERR $summary;
 
 # also print to log file
-open (LOG, ">".$outfile."-log.txt") or die "Can't write to ".$outfile."-log.txt: $!\n";
+open (LOG, ">".$outfile."-log.txt") or die "Can't write to ".$outfile."_fastaFiltLength-log.txt: $!\n";
 print LOG $summary;
 close LOG;
 

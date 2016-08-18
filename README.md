@@ -4,8 +4,8 @@
 
 ## Table of Contents
 **[Analysis tools](#Analysistools)**  
-**[Formatting tools for FASTA data](#FormattingtoolsforFASTAdata)**  
-**[Formatting tools for FASTQ data](#FormattingtoolsforFASTQdata)**  
+**[Formatting tools for FASTA data](#Formatting-tools-for-FASTA-data)**  
+**[Formatting tools for FASTQ data](#Formatting-tools-for-FASTQ-data)**  
 
 # Analysis tools
 

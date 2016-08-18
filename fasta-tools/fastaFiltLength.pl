@@ -11,6 +11,8 @@
 #
 # 2016/06/01; v2.0
 # add bgzipped output and corrected errors
+# 2016/08/18; v2.0.1
+# add create log file
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -22,7 +24,7 @@ use File::Basename;
 use File::Which;
 use POSIX qw(strftime);
 
-my $version = "2.0";
+my $version = "2.0.1";
 my $date = strftime "%m/%d/%Y", localtime;
 
 my $usage="## Usage: fastaFiltLength.pl <-i fasta_file (required)>
@@ -120,13 +122,22 @@ while( my $seq = $in -> next_seq() ) {
 }
 
 # print counts to stderr
-print STDERR "# Fasta length filtering (fastaFiltLength.pl v".$version."), ".$date."\n";
-print STDERR "# processed: ".$count." sequences\n";
-print STDERR "# total length: ".$totlen." bps\n";
-print STDERR "# too short: ".$shorter." sequences\n";
-print STDERR "# too long: ".$longer." sequences\n";
-print STDERR "# kept: ".$kept." sequences\n";
-print STDERR "# kept length: ".$keptlen." bps\n";
+my $summary = "# Fasta length filtering (fastaFiltLength.pl v".$version."), ".$date."\n";
+$summary .= "# InputFile: ".basename($infile)."\n";
+$summary .= "# OutputFile: ".basename($outfile)."\n";
+$summary .= "# processed: ".$count." sequences\n";
+$summary .= "# total length: ".$totlen." bps\n";
+$summary .= "# too short: ".$shorter." sequences\n";
+$summary .= "# too long: ".$longer." sequences\n";
+$summary .= "# kept: ".$kept." sequences\n";
+$summary .= "# kept length: ".$keptlen." bps\n";
+
+print STDERR $summary;
+
+# also print to log file
+open (LOG, ">".$outfile."-log.txt") or die "Can't write to ".$outfile."-log.txt: $!\n";
+print LOG $summary;
+close LOG;
 
 # cleanup
 undef $in;

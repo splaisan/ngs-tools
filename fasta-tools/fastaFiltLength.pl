@@ -13,6 +13,8 @@
 # add bgzipped output and corrected errors
 # 2016/08/18; v2.0.1
 # add create log file
+# 2016/10/13; v2.0.2
+# minlen undef small issue l.77
 #
 # visit our Git: https://github.com/BITS-VIB
 
@@ -24,7 +26,7 @@ use File::Basename;
 use File::Which;
 use POSIX qw(strftime);
 
-my $version = "2.0.1";
+my $version = "2.0.2";
 my $date = strftime "%m/%d/%Y", localtime;
 
 my $usage="## Usage: fastaFiltLength.pl <-i fasta_file (required)>
@@ -75,7 +77,7 @@ if ( defined($outname)) {
 	$outfile = $outpath."/".$outname;
 } else {
 	$outfile = $outpath."/filtered"
-		."_gt".(int($minlen/1000))
+		.(defined($minlen) ? "_gt".(int($minlen/1000)) : "")
 		.(defined($maxlen) ? "_lt".(int($maxlen/1000)) : "")
 		."-".$outbase.".fa";
 }

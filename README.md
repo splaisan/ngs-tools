@@ -66,7 +66,8 @@ The BIO-perl script [fastaFindGaps.pl](fasta-tools/fastaFindGaps.pl) will parse 
 
 ## **fastaFiltLength.pl**
 
-The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will filter a multifasta file and keep only sequence with length > min and <max values. Was created to filter genome assemblies containing multiple small files.
+The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will filter a multifasta file and keep only sequence with length &gt;min and &lt;max values. Was created to filter genome assemblies containing multiple small files.
+
 ```bash
 ## Usage: fastaFiltLength.pl <-i fasta_file (required)>
 # script version:2.0
@@ -78,11 +79,17 @@ The BIO-perl script [fastaFiltLength.pl](fasta-tools/fastaFiltLength.pl) will fi
 # <-h to display this help>
 ```
 
-## **rev_revcomp.pl**
+## **fastaRevComp.pl**
 
-The simple Perl script [rev_revcomp.pl](fasta-tools/rev_revcomp.pl) gets a list of sequences (primers) and returns the reverse and reverse+complement sequences.
+The BioPerl script [fastaRevComp.pl](fasta-tools/fastaRevComp.pl) reverse and complements fasta sequences (multifasta too).
+
 ```bash
-## usage: rev_revcomp.pl <file=list of sequences>
+## Usage: fastaRevComp.pl <-i fasta_file (required)>
+# script version:1.0
+# Additional optional parameters are:
+# <-o outfile_name (revcomp_)>
+# <-z zip results (default OFF)>
+# <-h to display this help>
 ```
 
 ## **fastaSortLength.pl**

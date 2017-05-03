@@ -55,7 +55,7 @@ while ( my $seq = $in->next_seq() ) {
 	$totlen+=$chrlen;
 	}
 
-print STDOUT "# Total length (filtered)\t".$totlen."\n";
+print STDERR "# Total length (filtered)\t".$totlen."\n";
 
 # end
 #close OUT;

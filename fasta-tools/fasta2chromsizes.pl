@@ -4,7 +4,7 @@
 # Create a table of chromosome lengths from a multifasta file
 #
 # Stephane Plaisance (VIB-NC+BITS) 2015/11/11; v1.00b
-# 1.1 allowing archived input
+# 1.1 allow compressed input and report total size
 # print to STDOUT to allow pipe
 #
 # visit our Git: https://github.com/BITS-VIB

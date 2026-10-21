@@ -16,7 +16,7 @@
 # 2016/10/13; v2.0.2
 # minlen undef small issue l.77
 #
-# visit our Git: https://github.com/BITS-VIB
+# visit our Git: https://github.com/Nucleomics-VIB
 
 use warnings;
 use strict;

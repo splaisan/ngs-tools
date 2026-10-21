@@ -10,7 +10,7 @@
 # Stephane Plaisance (VIB-NC+BITS) 2016/06/01; v2.0
 # fixed errors
 #
-# visit our Git: https://github.com/BITS-VIB
+# visit our Git: https://github.com/Nucleomics-VIB
 
 use strict;
 use File::Basename;

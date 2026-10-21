@@ -9,7 +9,7 @@
 # write to STDOUT to allow pipes; v1.00b 
 # added case insensitivity 2016-04-19; v1.01
 #
-# visit our Git: https://github.com/BITS-VIB
+# visit our Git: https://github.com/Nucleomics-VIB
 
 # examples: NEB Nickers for Bionanogenomics
 # 	'Nt-BspQI' => 'GCTCTTC'

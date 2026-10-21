@@ -7,7 +7,7 @@
 # 1.1 allow compressed input and report total size
 # print to STDOUT to allow pipe
 #
-# visit our Git: https://github.com/BITS-VIB
+# visit our Git: https://github.com/Nucleomics-VIB
 
 use warnings;
 use strict;

@@ -1,4 +1,4 @@
-[(BITS-VIB)](https://github.com/BITS-VIB)
+[(Nucleomics-VIB)](https://github.com/Nucleomics-VIB)
 ![ngstools](pictures/toolbox.png) - NGS-Tools
 ========
 
